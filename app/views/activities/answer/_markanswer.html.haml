@@ -4,8 +4,6 @@
       = image_tag activity.user.profile_picture.url(:small), :class=>"middle-image"
     .eleven.columns
       %p.post-name
-        %span.label.default.rounded.dark
-          ANSWER
         = link_to activity.user.name , activity.user, :class=>'post-user-name'
         has accepted a final answer for the question:
         = link_to activity.affected.title.truncate(TRIM_LENGTH, separator: ' ') ,activity.affected 

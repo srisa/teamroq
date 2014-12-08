@@ -12,8 +12,7 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates_presence_of :email, :message => "can't be blank"
   validates_presence_of :name, :message => "can't be blank"
-  validates_presence_of :password, :message => "can't be blank"
-
+  
   friendly_id :slug_candidates, use: [:slugged, :finders]
   
   devise :database_authenticatable,
@@ -58,7 +57,7 @@ class User < ActiveRecord::Base
     if self.feed.include? activity_id
       self.feed.delete activity_id
     end
-    self.feed.push activity_id
+    self.feed.unshift activity_id
     self.feed_will_change!
   end
 
@@ -66,7 +65,7 @@ class User < ActiveRecord::Base
     if self.notifications.include? activity_id
       self.notifications.delete activity_id
     end
-    self.notifications.push activity_id
+    self.notifications.unshift activity_id
     self.notifications_will_change!
   end
 

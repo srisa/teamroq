@@ -6,8 +6,6 @@
       = image_tag activity.user.profile_picture.url(:small), :class=>"middle-image"
     .eleven.columns
       %p.post-name
-        %span.label.primary.rounded
-          QUESTION
         = link_to activity.user.name , activity.user, :class=>'post-user-name'
         has commented on a question:
         = link_to question.title.truncate(TRIM_LENGTH, separator: ' ') , question

@@ -2,14 +2,11 @@ class ActivitiesController < ApplicationController
   respond_to :html, :json, :js
 
   def index
-    start = params[:page] ? params[:page] : 1
-    startNew = -((start.to_i-1)*10 + 1)
-    endNew = startNew - 9
-    if current_user.feed.length > -endNew
-      ids = current_user.feed[endNew..startNew]
-    else
-      ids = current_user.feed
-    end
+    page = params[:page] ? params[:page] : 1
+    feed_size = current_user.feed.length
+    start_item = (page.to_i-1)*10 
+    end_item = feed_size < (start_item + 10) ? feed_size : (start_item + 10)    
+    ids = current_user.feed[start_item..end_item]   
     @activities = Activity.includes([:user,:trackable ]).where(id: ids).order("updated_at DESC")
     @number = $redis.get(current_user.id.to_s + ":n_count")
     size = @activities.size

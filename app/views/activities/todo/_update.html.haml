@@ -5,8 +5,6 @@
       = image_tag activity.user.profile_picture.url(:small), :class=>"middle-image"
     .eleven.columns
       %p.post-name
-        %span.label.success
-          TASK 
         = link_to activity.user.name , activity.user, :class=>'post-user-name'
         has updated the task: 
         = link_to @todo.name.truncate(TRIM_LENGTH, separator: ' '), todo_list_todo_path(@todo.todo_list,@todo)
