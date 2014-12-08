@@ -1,0 +1,10 @@
+.row
+  - @project.todo_lists.each do |list|
+    - unless list.todos.blank?
+      .four.columns
+        %h5
+          = list.name
+        .medium.rounded.primary.btn.metro
+          = link_to "Add Task", "#", :class=> "weighted"
+        - list.todos.each do |todo|
+           = render "common/todo", :todo => todo 

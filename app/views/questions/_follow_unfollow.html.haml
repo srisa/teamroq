@@ -1,0 +1,6 @@
+- unless current_user.follows_question?(@question)
+  .medium.primary.btn.metro.rounded
+    =link_to "Follow", follow_question_path(@question), :class=> 'weighted follow',:method =>'patch', :remote=> :true
+- else
+  .medium.primary.btn.metro.rounded
+    =link_to "Unfollow", unfollow_question_path(@question),:class => 'weighted unfollow', :method =>'patch', :remote=> :true

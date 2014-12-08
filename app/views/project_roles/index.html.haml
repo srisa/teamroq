@@ -1,0 +1,17 @@
+%h1 Listing project_roles
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @project_roles.each do |project_role|
+    %tr
+      %td= link_to 'Show', project_role
+      %td= link_to 'Edit', edit_project_role_path(project_role)
+      %td= link_to 'Destroy', project_role, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Project role', new_project_role_path

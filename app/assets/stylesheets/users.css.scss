@@ -1,0 +1,29 @@
+@import "var/settings";
+
+
+.user-name-box{
+background-color: #ffffff;
+height: 100%;
+
+}
+
+.filler-text{
+	color: #e2e2e2;
+}
+
+.gamification-badge{
+	border: 2px solid $body-font-color;
+	width: 12em;
+	height: 12 em;
+	border-radius: 6em;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	h6{
+		color: $primary-color;
+		font-size: 1.3em;
+		font-weight: 700;
+	}
+	span{
+		color: $primary-color;
+	}
+}

@@ -1,0 +1,63 @@
+.padding-box
+  .row
+    .eight.columns
+      .row
+        .twelve.columns
+          .row.small-top-margin
+            .two.columns
+              = render partial: 'votes/vote', locals: {votable: @question}
+
+            .ten.columns
+              .row
+                .twelve.columns
+                  - @question.topic_list.each do |t|
+                    %span.secondary.label
+                      = link_to t, tag_path(t), :class=> 'taginfo label'
+                  
+              .row
+                .twelve.columns
+                  %h5.title
+                    = @question.title
+              .row
+                .twelve.columns
+                  %p.concise-text
+                    = @question.content
+              .row
+                .five.columns.push_seven
+                  .row
+                    %small.small-font
+                      Asked
+                      = time_ago_in_words @question.created_at
+                      ago
+                  = render partial: "user_signature", locals: {user: @question.user}
+              .row
+                .twelve.columns
+                  = link_to "#{@question.comments.size} Comments", question_comments_path(@question), :class => "show-comment-btn", :id=> "show-comment-btn-question#{@question.id}", :remote => true
+                  
+              .row.comment-section{:id => "comment-section-question#{@question.id}"}  
+        
+      .row
+        .twelve.columns
+          %h5
+            = @question.answers.size
+            Answers
+        %hr
+        
+      .row.answer-section
+        .twelve.columns
+          = render partial: "answers/each_answer", collection: @question.answers, as: :answer
+      .row
+        .row
+          .twelve.columns
+            %h5
+              Your Answer
+        .row.medium-top-margin
+          .twelve.columns{"data-target" => "answer-question"}
+            = form_for [@question, Answer.new] do |f|
+              .field
+                = f.text_area :content, :placeholder => "Enter your answer", :rows=>5, :class=> 'input textarea ckeditor'
+              .primary.btn.medium.metro.rounded
+                = f.submit 'Answer', :class=>'weighted', :id => 'submit-answer-button'
+
+    .four.columns
+      = render partial: "rightside_section"  

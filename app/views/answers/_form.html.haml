@@ -1,0 +1,18 @@
+= form_for [@question,@answer] do |f|
+  .alert.alert-warning
+    %h3
+      Question
+    %p
+      = @question.content
+  %hr
+  %h6
+    Your Answer
+  %i.fa.fa-search
+  - if @answer.errors.any?
+    .alert.error
+      %h3= "#{pluralize(@answer.errors.count, "error")} prohibited this answer from being saved:"
+      - @answer.errors.full_messages.each do |msg|
+        %p= msg
+  .field
+    = f.text_area :content,:rows=>5, :class=>"input textarea ckeditor",:id=>'answer_text_area', :placeholder => 'Enter your answer'
+  = f.submit 'Answer this Question', :class=>'btn metro rounded primary pull-right'

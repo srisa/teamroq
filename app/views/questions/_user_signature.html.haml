@@ -1,0 +1,6 @@
+.row.usersignature
+  .two.columns.image.square
+    = image_tag user.profile_picture(:little)
+  .ten.columns.askerinfo.small
+    %a.small-font{href: user_path(user)}
+      = user.name

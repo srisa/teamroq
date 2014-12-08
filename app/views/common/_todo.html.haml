@@ -1,0 +1,48 @@
+.todo-box
+  %p.todo-header-box
+    %a(href="/todo_lists/#{todo.todo_list.id}/todos/#{todo.id}")
+      %b
+        = todo.name.titleize
+  %p.todo-name-box
+    %a(href="/users/#{todo.user.to_param}")
+      = todo.user.name
+  .todo-content-box    
+    %span.concise-text
+      = truncate(todo.details, :length => 100)
+  .todo-footer-box
+    %span
+      %a(href="/todo_lists/#{todo.todo_list.id}/todos/#{todo.id}")
+        =todo.comments.count 
+        Comments
+
+    %span.tick-box
+      -if todo.can_close?
+        = link_to '<i class="fa fa-check"></i>'.html_safe, close_todo_list_todo_path(todo.todo_list,todo), :method =>'put', :class => 'weighted', title: "Close this task"
+      = link_to '<i class="fa fa-edit"></i>'.html_safe, edit_todo_list_todo_path(todo.todo_list,todo),  :class => 'weighted', title: "Edit this task"
+      = link_to '<i class="fa fa-trash"></i>'.html_safe, todo_list_todo_path(todo.todo_list,todo), :method =>'delete', :class => 'weighted', data: {:confirm => "Are you sure?"},title: "Delete this task"
+
+    %span.grey
+      %small.pull-right.time-ago-text
+        - unless todo.versions.last.nil?
+          - if todo.state == 'closed'
+            - closed_date = todo.versions.last.created_at.to_date
+            - target_date = todo.target_date.to_date
+            - diff = (closed_date - target_date).to_i
+            Finished
+            - if diff == 0          
+              on time
+            -elsif diff>0
+              =pluralize(diff,'day')
+              late
+            - else
+              =pluralize(diff.abs,'day')
+              early
+          -else
+            = distance_of_time_in_words_to_now(todo.target_date)
+            - if Date.current < todo.target_date          
+              to go
+            - else
+              delayed
+            
+
+    

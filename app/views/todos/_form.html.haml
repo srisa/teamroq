@@ -1,0 +1,45 @@
+= form_for [@todo_list,@todo] do |f|
+  - if @todo.errors.any?
+    #error_explanation
+      %h5= "#{pluralize(@todo.errors.count, "error")} prohibited this todo from being saved:"
+      %ul
+        - @todo.errors.full_messages.each do |msg|
+          %li= msg
+
+  %fieldset
+    %h5
+      - if action_name == "edit"
+        Amend a Task
+      - else
+        Add a Task
+
+    .field.small-top-margin
+
+      = f.label :todo_list_id, "Select Task List"
+      .picker
+        = f.collection_select :todo_list_id, @todo_lists,:id,:name
+    .field
+      =f.text_field :name, :placeholder => "Title", :class=> "input"
+    .field  
+      =f.text_area :details,:rows => 4, :placeholder => "Description", :class=> "input textarea"
+    .field  
+      %input.input.search-user-todo{:placeholder => "Assignee. Start typing the name"}
+    .field  
+      =f.hidden_field :user_id,:rows => 2,  :class=> "input userid"
+    .field
+      = f.text_field :target_date, :placeholder => "Completion date", :class=> "input calendar-field"
+    .field
+      = label_tag 'watchers_list', "Add watchers to this task"
+      = text_area_tag :watchers_list, nil, :class=>"input tagsinput add-watchers-tagsinput"
+
+    .medium-top-margin
+      - if action_name == "edit"
+        .medium.rounded.primary.metro.btn
+          = f.submit "Amend Task"
+      - else
+        .medium.rounded.primary.metro.btn
+          = f.submit "Add Task"
+      
+      = link_to "Back", :back, :class => "weighted pull_right"
+
+

@@ -1,0 +1,59 @@
+%html(lang="en")
+  %head
+    %meta(charset="utf-8")
+    %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %meta(name="description" content="A new age Social Intranet for your organization. Complete knowledge management, project management and task management solution. Reputation system and badges make your employees strive to contribute more and more to your local knowledge database. Activity feeds and notifications will make sure that you stay updated with latest happenings on your tasks and areas of interest.")
+    %meta(name="keywords" content="Knowledge management, task management, project management, badges, reputation score")
+    %title
+      = content_for?(:title) ? yield(:title) : "Teamroq"
+    = csrf_meta_tags
+    = stylesheet_link_tag "application", :media => "all","data-turbolinks-track" => ""
+    = javascript_include_tag "application" ,"data-turbolinks-track" => ""
+    = yield :head
+
+    %link(href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css')
+    %link(href="favicon.ico" rel="shortcut icon")
+
+
+  %body
+    = render :partial => "layouts/partials/header"
+    - if user_signed_in?
+      .row#no-gutter
+        .twelve.columns#no-gutter
+          = render :partial => "layouts/partials/alerts"
+          = yield
+        .container.spl
+        #search-results
+    - else
+      .row
+        .twelve.columns.main-bar-down
+        .eight.columns.centered
+          = render :partial => "layouts/partials/alerts"
+          = yield
+
+
+      .bottom-menu.bottom-menu-inverse
+        .container
+          .row
+            .span2.brand
+              %a.fui-flat(href='#')
+            .span8
+              %ul.bottom-links
+
+    = javascript_include_tag "//www.google.com/jsapi","chartkick"
+    = yield :charts_js
+
+    - if user_signed_in?
+      - val = "/messages/" + current_user.id.to_s + "/ncount"
+      - hex = Digest::SHA256.hexdigest(val)[1,12]
+      = subscribe_to "/messages/" + hex
+
+      :javascript
+        $(document).on("ready",function(){
+          var channelName = "/messages/#{hex}"
+          PrivatePub.subscribe(channelName, function(data, channel) {
+            $(".notification-bubble").html(data.message);
+            $(".notification-bubble").show();
+            });
+        });   

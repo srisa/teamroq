@@ -1,0 +1,22 @@
+= form_for [@commentable, Comment.new] do |f|
+  #new_comment.add_comment
+  .field
+    = f.text_field :content, :size => 55,  :placeholder => 'leave a comment...', :class => 'input'
+  .field
+    .primary.medium.btn.metro
+      = f.submit "Submit" 
+%br
+- @commentable.comments.recent.each do |comment|
+  %ul.unstyled
+    %li
+      %small
+        = link_to comment.user_name , comment.user
+        added a
+        = link_to "Comment", [@commentable,comment]
+        = time_ago_in_words comment.created_at
+        ago
+        %br
+        = comment.content
+    
+
+

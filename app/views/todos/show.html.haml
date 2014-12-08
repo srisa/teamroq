@@ -1,0 +1,152 @@
+.big-left-margin
+  .row
+    .twelve.columns
+      .full  
+        .margin-box
+          .row.padding-box
+            .seven.columns
+              .row
+                .nine.columns
+                  %ul.breadcrumb
+                    %li
+                      = link_to truncate(@project.name).upcase, @project
+                    %li
+                      = link_to @todo.todo_list.name.upcase, [@project,@todo_list]
+                .three.columns  
+                  %span.pull-right.big-icon
+                    = link_to '<i class="fa fa-edit"></i>'.html_safe, edit_todo_list_todo_path(@todo.todo_list,@todo),  :class => 'weighted', title: "Edit this task"
+                    = link_to '<i class="fa fa-trash"></i>'.html_safe, todo_list_todo_path(@todo.todo_list,@todo), :method =>'delete', :class => 'weighted', :data => {:confirm => "Are you sure?"},title: "Delete this task"
+              .row
+                %p
+                  -if @todo.can_close?
+                    This task is still Open(
+                    = link_to 'Close', close_todo_list_todo_path(@todo_list,@todo), :method =>'patch', :class => 'change-state weighted'
+                    )  
+                  - else 
+                    This task is Closed(
+                    = link_to 'Reopen', reopen_todo_list_todo_path(@todo_list,@todo), :method =>'patch', :class => 'change-state weighted'
+                    )                  
+              .well.small-top-margin
+                .row
+                  .twelve.columns
+                    %h5
+                      = @todo.name
+                .row
+                  .twelve.columns.todo-description
+                    %p.concise-text.grey
+                      = @todo.details
+              .row
+                - @todo.comments.recent.each do |comment|
+                  .row.border-bottom-light
+                    .small-top-padding                  
+                      .one.column.image.circle
+                        = image_tag comment.user.profile_picture.url(:small)
+                      .eleven.columns
+                        = link_to comment.user_name , comment.user
+                        %span
+                          %small.grey
+                            = time_ago_in_words(comment.created_at)
+                            ago
+                        .row
+                          .twelve.columns
+                            %p.concise-text
+                              = comment.content
+              .row
+                .margin-box
+                  .twelve.columns
+                    = form_for [@todo, Comment.new] do |f|
+                      .field
+                        = f.text_area :content, :rows=> 3,  :placeholder => 'leave a comment...', :class => 'input textarea'
+                      .field
+                        .primary.medium.btn.metro.rounded
+                          = f.submit "Submit" 
+            .five.columns
+              .row.left-margin
+                %h5.grey.task-sub-heading
+                  ASSIGNED TO
+                .row
+                  .two.column
+                    =image_tag @todo.user.profile_picture(:little)
+                  .ten.columns
+                    = @todo.user.name
+                    (
+                    %a.change-user-link{:id =>'change-user-link', href:'#'}
+                      Change
+                    )
+                .row.change-user-form{:style => "display:none"}
+                  .twelve.columns
+                    = form_for [@todo_list,@todo], :url => {:action => :change_user}, method: :patch, :html => {:id => 'form-change-user'} do |f|
+                      %fieldset
+                        %legend
+                          %h5
+                            Change user
+                        %p
+                          Start typing the user name
+                        .field  
+                          %input.input.search-user{:id => 'search-user', :placeholder => "Enter assignee"}
+                        .field  
+                          =f.hidden_field :user_id,:rows => 2,  :class=> "input userid"
+                      .medium.rounded.primary.metro.btn
+                        = f.submit "Submit"
+                      .btn.danger.medium.metro.rounded
+                        %a.closeform.weighted{href: "#"} 
+                          Cancel
+                %h5.grey.task-sub-heading
+                  TARGET COMPLETION DATE
+
+                %p.concise-text
+                  %i.fa.fa-calendar
+                  = @todo.target_date.strftime('%a %d %b %Y')
+                  (
+                  %a.change-date-link{:id =>'change-date-link', href:'#'}
+                    Change
+                  )
+                .row.change-date-form{:style => "display:none"}
+                  .twelve.columns
+                    = form_for [@todo_list,@todo], :url => {:action => :change_date}, method: :put, :html => {:id => 'form-change-date'} do |f|
+                      %fieldset
+                        %legend
+                          %h5
+                            Change target date
+                        .field
+                          = f.text_field :target_date, :placeholder => "Enter tentative completion date", :class=> "input calendar-field", :id => "calendar-field"
+                      .medium.rounded.primary.metro.btn
+                        = f.submit "Submit"
+                      .btn.danger.medium.metro.rounded
+                        %a.closedateform.weighted{href: "#"} 
+                          Cancel
+                .row.small-margin-top
+                  .six.columns.followers_count{:title => 'Number of Watchers'}
+                    .medium.secondary.metro.rounded.btn.followers-count-btn
+                      = link_to pluralize(@followers_count, 'Watcher'), '#', :class=> 'followers-number'
+                  .six.columns.follow_unfollow
+                    = render partial: "follow_unfollow"
+                .row.show-followers
+                  -@watchers.each do |watcher|
+                    .row.small-margin-top
+                      .two.columns
+                        .image.rounded{:title => "#{watcher.name}"}
+                          =image_tag watcher.profile_picture.url(:little)
+                      .ten.columns
+                        =link_to watcher.name, watcher
+                .row
+                  .twelve.columns
+                    = form_tag add_followers_todo_list_todo_path(@todo_list,@todo), :method => 'patch', :id => 'add-followers-form' do
+                      %h5.grey.task-sub-heading
+                        ADD WATCHERS
+                      .field
+                        = text_area_tag :followers_list, nil, :class=>"input tagsinput add-followers-tagsinput"
+                      .field
+                        .medium.primary.metro.btn.rounded
+                          = submit_tag "Add Watchers", :id => 'add-followers-button'
+                .row.state-history
+                  .twelve.columns
+                    %h5{:title=>'Find out the history of this task'}
+                      =link_to " Check Task History", state_history_todo_list_todo_path(@todo_list,@todo),:class=> 'look-state weighted',:id=> 'todo-history', :method =>'patch', :remote=> :true
+                    .state-results
+                      = render partial: "state_history_view", collection: @states, as: :state
+                    
+
+                      
+              
+   

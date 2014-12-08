@@ -1,0 +1,22 @@
+.wrapper-box
+  .row{:id => "comment-list-activity#{activity.id}"}
+    - commentable.comments.reverse.each do |comment|
+      .row
+        .one.columns      
+          = image_tag comment.user.profile_picture.url(:little), :class => "middle-image"
+        .eleven.columns
+          %span.subbar-comment-name
+            %a{href: user_path(comment.user)} 
+              = comment.user_name
+            %span.grey.time-ago
+              %small
+                = time_ago_in_words comment.created_at
+                ago
+          %p.concise-text.subbar-comment-name
+            = comment.content
+      
+  .row.small-top-margin
+    .eleven.push_one.columns.field
+      = form_for [commentable, Comment.new], :url => {:action => :activity_comment, :activity_id => activity.id}, :remote=> true, :html => {:id => "activity#{activity.id}-comment-form"}  do |f|
+        .field.pad-right
+          = f.text_field :content , :placeholder => "Enter Comment", :class=> "comment-input", :id => "comment-box-activity#{activity.id}"

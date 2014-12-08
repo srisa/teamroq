@@ -1,0 +1,22 @@
+.big-left-margin
+  .row
+    .four.columns.centered
+      = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+        = devise_error_messages!
+        %fieldset
+          %legend
+            %h5
+              Change your password
+          .field
+            = f.label :current_password
+            = f.password_field :current_password, class: "input"
+          .field
+            = f.label :password
+            = f.password_field :password, :autocomplete => "off", class: "input"
+          .field
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, class: "input"
+          .medium-top-margin  
+            .medium.rounded.primary.metro.btn
+              = f.submit 'Update' ,:class=>'weighted'
+            = link_to 'Back', :back ,:class=>'weighted'

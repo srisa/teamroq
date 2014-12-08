@@ -1,0 +1,20 @@
+.big-left-margin
+  .row.small-top-margin
+    .six.columns
+      %h4
+        = @todo_list.name.titleize
+    .six.columns
+  .row    
+    .medium.rounded.primary.btn.metro.pull-left
+      %a.switch.weighted{"gumby-trigger" => "#todo-modal#{@todo_list.id}", href: "#"}
+        Add Task
+    .medium.rounded.primary.btn.metro.pull-right
+      = link_to "Archived Tasks" , closed_project_todo_list_path(@project,@todo_list), :class=> "weighted"
+  %br
+  - @todo_list.todos.by_open.each_slice(4).each do |slice|
+    .row
+      - slice.each do |todo|
+        .three.columns
+          = render "common/todo", :todo => todo
+        
+  = render partial: "todos/modal_form", locals: {todo_list: @todo_list} 

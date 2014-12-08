@@ -1,0 +1,2 @@
+$('.follow_unfollow').html('<%= escape_javascript(render partial: "topics/follow_unfollow") %>');
+$('.followers_count').html('<%= escape_javascript(link_to pluralize(@followers_count, "Follower"), "#", :class=> "followers-number") %>');

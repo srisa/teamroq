@@ -1,0 +1,25 @@
+.row
+  .three.columns.big-padding-box.submenu
+    = link_to @group  do
+      %i.fa.fa-fw.fa-lg.fa-newspaper-o
+      &nbsp;&nbsp;Dashboard
+    = link_to users_group_path(@group) do
+      %i.fa.fa-fw.fa-lg.fa-user
+      &nbsp;&nbsp;Users
+    = link_to "/groups/#{@group.to_param}/announcements", :class=> " active"  do
+      %i.fa.fa-fw.fa-lg.fa-bullhorn
+      &nbsp;&nbsp;Announcements
+    = link_to "/groups/#{@group.to_param}/documents"  do
+      %i.fa.fa-fw.fa-lg.fa-file-o
+      &nbsp;&nbsp;Documents    
+    %hr
+  .nine.columns
+    .row
+      .twelve.columns.medium-top-margin
+        %table
+          - @announcements.each do |announcement|
+            %tr
+              %td
+                = announcement.created_at.to_date.to_formatted_s(:short)
+              %td
+                = announcement.content

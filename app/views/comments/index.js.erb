@@ -1,0 +1,10 @@
+$('#comment-section-<%=@commentable.class.name.downcase%><%=@commentable.id%>').html('<%= escape_javascript(render partial: "comments/comment_box", locals: {commentable: @commentable}) %>');
+
+$("a#show-comment-btn-<%=@commentable.class.name.downcase%><%=@commentable.id%>").attr("href","#");
+$("a#show-comment-btn-<%=@commentable.class.name.downcase%><%=@commentable.id%>").removeAttr("data-remote");
+
+$("a#show-comment-btn-<%=@commentable.class.name.downcase%><%=@commentable.id%>").click(event,function(){
+  event.stopPropagation();
+  event.preventDefault();
+  $('#comment-section-<%=@commentable.class.name.downcase%><%=@commentable.id%>').toggle();
+});

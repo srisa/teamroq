@@ -1,0 +1,14 @@
+.eachcomment
+  .commentheader.row
+    .one.column
+      = image_tag comment.user.profile_picture.url(:little)
+    .eight.columns.usernamecomment
+      %span.block
+        %a{href: user_path(comment.user)} 
+          = comment.user_name
+        %span.grey.time-ago.pull-right
+          = time_ago_in_words comment.created_at
+          ago
+      %span.block
+        = comment.content
+%hr.no-margin

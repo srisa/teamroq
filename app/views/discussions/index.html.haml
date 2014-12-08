@@ -1,0 +1,71 @@
+.row
+  .three.columns.big-padding-box.submenu
+    = link_to @project  do
+      %i.fa.fa-fw.fa-lg.fa-newspaper-o
+      &nbsp;&nbsp;Dashboard
+    = link_to users_project_path(@project) do
+      %i.fa.fa-fw.fa-lg.fa-user
+      &nbsp;&nbsp;Users
+    = link_to "/projects/#{@project.to_param}/discussions" , :class=> "active" do
+      %i.fa.fa-fw.fa-lg.fa-send-o
+      &nbsp;&nbsp;Discussions
+    = link_to standup_project_path(@project) do
+      %i.fa.fa-fw.fa-lg.fa-coffee
+      &nbsp;&nbsp;Standup Meeting
+    = link_to "/projects/#{@project.to_param}/documents" do
+      %i.fa.fa-fw.fa-lg.fa-file-o
+      &nbsp;&nbsp;Documents
+    = link_to "/projects/#{@project.to_param}/charts"do
+      %i.fa.fa-fw.fa-lg.fa-line-chart
+      &nbsp;&nbsp;Charts
+    %hr
+    %h6
+      FILTERS
+    = link_to "/projects/#{@project.to_param}/discussions/filter/latest" , :class=> "filter-link" do
+      %i.fa.fa-w.fa-bolt
+      UPDATED TODAY
+    = link_to "/projects/#{@project.to_param}/discussions/filter/popular" , :class=> "filter-link" do
+      %i.fa.fa-w.fa-star
+      MOST POPULAR
+    = link_to "/projects/#{@project.to_param}/discussions/filter/followed" , :class=> "filter-link" do
+      %i.fa.fa-w.fa-paper-plane-o
+      FOLLOWED BY ME
+    = link_to "/projects/#{@project.to_param}/discussions/filter/created" , :class=> "filter-link" do
+      %i.fa.fa-w.fa-user
+      CREATED BY ME
+  .nine.columns
+    .row
+      .eight.columns
+        %h3
+          Discussions
+      .four.columns
+        %span.medium.primary.btn.metro.rounded.small-top-margin.pull_right
+          = link_to "Start a Discussion", [:new,@project,:discussion], :class=> "weighted "
+
+    %table.medium-top-margin
+      - @discussions.each do |discussion|
+        %tr
+          %td
+            %h6
+              %b
+                = link_to discussion.title, [@project,discussion]
+          %td
+            = time_ago_in_words(discussion.updated_at)
+            ago
+          %td
+            =  link_to [@project, discussion] , class: "grey-header" do
+              = pluralize(discussion.comments.count, 'Comment')
+            %p.concise-text
+              - discussion.comments.recent.limit(1).each do |comment|
+                = comment.content
+          %td
+            = image_tag discussion.user.profile_picture.url(:little), class: "middle-image"
+            = link_to discussion.user.name, discussion.user, class: "grey-header"
+
+    .medium-top-margin
+      = will_paginate(@discussions)
+     
+    %br
+
+
+

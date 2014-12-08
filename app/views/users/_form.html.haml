@@ -1,0 +1,56 @@
+= form_for @user, :html=>{:multipart=>true} do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h5= "#{pluralize(user.errors.count, "error")} prohibited this user from being saved:"
+      %ul
+        - user.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    %h4
+      Your Details
+    %hr.no-margin
+    .row.medium-top-margin
+      .six.columns
+        .field
+          = f.label :name
+          = f.text_field :name, :class=> 'input', :type => 'text'
+      .six.columns
+        .field
+          = f.label "Update your profile Picture"
+          = f.file_field :profile_picture
+
+    %h5
+      Contact & Location
+    %hr.no-margin
+    .row    
+      .six.columns.medium-top-margin
+        .field
+          = f.label :email
+          = f.text_field :email, :class=> 'input', :type => 'email', :readonly => true
+        .field
+          = f.label :desk
+          = f.text_field :desk, :class=> 'input', :type => 'text'
+        .field
+          = f.label :time_zone
+          .picker
+            = f.time_zone_select :time_zone
+      
+    %h5
+      Secondary Information
+    %hr.no-margin
+    .row  
+      .six.columns.medium-top-margin  
+        .field
+          = f.label :designation
+          = f.text_field :designation, :class=> 'input', :type => 'text'
+        .field
+          = f.label :skill
+          = f.text_area :skill, :class=> 'input textarea', :rows=> 2
+        .field
+          = f.label :detail
+          = f.text_area :detail, :class=> 'input textarea', :rows=> 2
+        .metro.medium.primary.btn.rounded
+          = f.submit 'Submit'
+        .metro.medium.danger.btn.rounded.pull_right
+          = link_to 'Cancel', :back
+

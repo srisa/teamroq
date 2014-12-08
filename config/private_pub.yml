@@ -1,0 +1,10 @@
+development:
+  server: http://localhost/faye/faye
+  secret_token: "secret"
+test:
+  server: http://localhost/faye/faye
+  secret_token: "secret"
+production:
+  #e.g., https://www.xxxx.com/faye/faye
+  server: https://www.example.org/faye/faye
+  secret_token: "USE A REALLY LONG HEX STRING HERE"

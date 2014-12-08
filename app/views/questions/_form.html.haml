@@ -1,0 +1,29 @@
+.row
+  .twelve.columns
+    %h5.text-primary
+      Check if your question has been already answered in search bar above. 
+
+= form_for @question do |f|
+  - if @question.errors.any?
+    .alert.alert-error
+      %button.close.fui-cross(type='button' data-dismiss='alert')
+      %h3= "#{pluralize(@question.errors.count, "error")} prohibited this question from being saved:"
+      - @question.errors.full_messages.each do |msg|
+        %p= msg
+      %a.btn.btn-info.btn-wide(href="#")
+        Learn more
+  %fieldset
+    %h5
+      Add a Question
+    .field.small-top-margin
+      = f.text_field :topic_list,:class=>"input tagsinput add-topics-tagsinput", :placeholder => 'Add Topics'
+    .field
+      = f.text_field :title, :class=> "input",:placeholder => "Enter a title for the question."
+    .field
+      = f.text_area :content, :rows=>6, :cols => 80,:class=>'input textarea inputboxforUserSearch',:placeholder =>'Describe your Question'
+  
+    .row.medium-top-margin
+      .medium.rounded.primary.metro.btn
+        = f.submit 'Add Question' ,:class=>'weighted'
+      .medium.rounded.secondary.metro.btn.pull_right
+        = link_to 'Back', :back ,:class=>'weighted'

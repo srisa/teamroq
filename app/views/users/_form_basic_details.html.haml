@@ -1,0 +1,30 @@
+.twelve.columns.edit-heading
+  %h2 Edit Details
+.ten.columns.edit-content
+  = form_for user, remote: true, :html=>{:multipart=>true} do |f|
+    - if user.errors.any?
+      #error_explanation
+        %h5= "#{pluralize(user.errors.count, "error")} prohibited this user from being saved:"
+        %ul
+          - user.errors.full_messages.each do |msg|
+            %li= msg
+
+    .field
+      = f.label :name
+      = f.text_field :name, :class=> 'input', :type => 'text'
+    .field
+      = f.label :email
+      = f.text_field :email, :class=> 'input', :type => 'email'
+    .field
+      = f.label :desk
+      = f.text_field :desk, :class=> 'input', :type => 'text'
+    .field
+      = f.label :profile_picture
+      = f.file_field :profile_picture, :class=> 'input'
+    .field
+      = f.label :designation
+      = f.text_field :designation, :class=> 'input', :type => 'text'
+    .actions
+      = f.submit 'Update', :class => 'pretty medium primary btn'
+      
+  = button_tag "Cancel", type: :cancel, :class=> 'pretty medium default btn cancel-btn'

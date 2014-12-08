@@ -1,0 +1,72 @@
+.big-left-margin
+  .row
+    .six.columns
+      %h4 Your Projects
+    .six.columns.small-margin-top
+      %span.pull-right.medium.metro.rounded.btn.primary
+        = link_to 'Create Project', new_project_path, :class=> "weighted"
+        
+  - @projects.each_slice(4) do |slice|
+    .row
+      - slice.each do |project|
+        .three.columns.background-box.medium-top-margin.project-whole-box
+          .margin-box
+            %h4.header-box
+              = link_to project.name.titleize, standup_project_path(project),:title =>"View the standup for this project"
+          .margin-box
+            %h5.content-box
+              = project.description
+
+          / %hr.no-margin
+          .filler-box
+            .margin-box
+              .row
+                .four.columns.push_one
+                  %a{:href=>"/projects/#{project.to_param}"}
+                    %p.title-box
+                      = project.todo_lists.count
+                    %p.special-text-box
+                      TaskLists
+                .four.columns.push_one
+                  %a{:href=>"/projects/#{project.to_param}/documents"}
+                    %p.title-box
+                      = project.documents.count
+                    %p.special-text-box
+                      Documents
+              .row 
+                .four.columns.push_one
+                  %a{:href=>"/projects/#{project.to_param}/discussions"}
+                    %p.title-box
+                      = project.discussions.count
+                    %p.special-text-box
+                      Discussions
+                .four.columns.push_one
+                  %a{:href=>"/projects/#{project.to_param}/users"}
+                    %p.title-box
+                      = project.users.count
+                    %p.special-text-box
+                      Users
+            / .margin-box.centered-text
+            /   %span.grey
+            /     %i.icon-calendar.big-icon
+            /     LAST MODIFIED: 
+            /     = time_ago_in_words(project.updated_at)
+            /     ago
+            .margin-box
+              .row
+                .nine.columns
+                  .meter.blue
+                    %span{style: "width:#{@percentages[project.id]}%"}
+                .one.column.push_one
+                  %span.text-primary.ptg-comp
+                    #{@percentages[project.id]}%
+            .margin-box
+              %span.pull-right.bigger-icon.project-tick-box
+                = link_to '<i class="fa fa-edit"></i>'.html_safe, edit_project_path(project),  :class => 'weighted', title: "Edit this project"
+                = link_to '<i class="fa fa-trash"></i>'.html_safe, project_path(project), :method =>'delete', :class => 'weighted', :data => {:confirm => "Are you sure? You will lose all data from your project!"},title: "Delete this project"
+  .medium-top-margin
+    = will_paginate(@projects)
+  .medium-top-margin
+
+       
+

@@ -1,0 +1,7 @@
+= form_for [@postable, Post.new] , :html=>{:multipart=>true} do |f|
+  
+  .field
+    = f.text_area :content, :rows => 3,:class => "input textarea"
+  .row
+    .medium.rounded.primary.metro.btn
+      = f.submit 'Post'

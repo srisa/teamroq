@@ -1,0 +1,5 @@
+$('#show-comment-activity<%=@activity.id%>')
+.html("<i class='fa fa-comment'></i><%=pluralize(@commentable.comments.count,'Comment')%>");
+$('input#comment-box-activity<%=@activity.id%>').val("");
+$("#comment-section-activity<%=@activity.id%>").html('<%= escape_javascript(render partial: "comments/activity_comment_box", locals: {commentable: @commentable,activity:@activity}) %>');
+

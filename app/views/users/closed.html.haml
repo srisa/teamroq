@@ -1,0 +1,40 @@
+.row
+  .three.columns
+    .row
+      .twelve.columns
+        .fixme{"gumby-fixed" =>"top"}
+          .big-padding-box.submenu
+            %h5
+              FILTERS
+            = link_to "/tasks"  do
+              %i.fa.fa-w.fa-lg.fa-bullseye
+              Assigned to me
+            = link_to "/tasks/created"  do
+              %i.fa.fa-w.fa-lg.fa-user
+              Created by me
+            = link_to "/tasks/closed" , :class=> "active" do
+              %i.fa.fa-w.fa-lg.fa-check-circle-o
+              Closed by me
+            %hr
+            %small
+              %a{href: "/todos/new"}
+                %i.fa.fa-plus-square
+                ADD TASK
+  .nine.columns
+    .row.medium-top-margin
+      .eight.columns
+        %h5
+          Archived Tasks
+    - @tasks.each_slice(3) do |slice|
+      .row
+        - slice.each do |todo|
+          .four.columns
+            = render "common/todo_user" , :todo => todo
+    .medium-top-margin
+      = will_paginate(@tasks) 
+       
+    - unless @tasks.presence
+      .row
+        .twelve.columns.medium-top-margin
+          %h4.grey.centered-text.medium-top-margin
+            No Tasks yet.Tasks closed by you will appear here.

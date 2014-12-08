@@ -1,0 +1,2 @@
+module DiscussionFollowersHelper
+end

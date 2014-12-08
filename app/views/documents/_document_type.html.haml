@@ -1,0 +1,19 @@
+- file_type =  document.document_versions.last.file_content_type
+-unless file_type == nil
+  - if file_type.match(/msword/)|| file_type.match(/wordprocessingml/)
+    %i.fa.fa-file-word-o.fa-4x.fa-w.file-image
+  - elsif file_type.match(/pdf/)
+    %i.fa.fa-file-pdf-o.fa-4x.fa-w.file-image
+  - elsif file_type.match(/zip/)
+    %i.fa.fa-file-archive-o.fa-4x.fa-w.file-image
+  - elsif file_type.match(/powerpoint/)|| file_type.match(/presentationml/)
+    %i.fa.fa-file-powerpoint-o.fa-4x.fa-w.file-image
+  - elsif file_type.match(/excel/) || file_type.match(/spreadsheetml/)
+    %i.fa.fa-file-excel-o.fa-4x.fa-w.file-image
+    = image_tag "xls-light.png", :class=> "doc-image"
+  - elsif file_type.match(/^image/)
+    %i.fa.fa-file-picture-o.fa-4x.fa-w.file-image
+  - else
+    %i.fa.fa-file-o.fa-4x.fa-w.file-image
+- else
+  %i.fa.fa-file-o.fa-4x.fa-w.file-image

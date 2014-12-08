@@ -1,0 +1,20 @@
+#add-user-modal.modal  
+  .content
+    %a.close.switch{"gumby-trigger" => "|#add-user-modal"}
+      %i.fa.fa-close
+    .row
+      .twelve.columns.centered
+        = form_tag '/groups/add_users', :html => {:id => 'add-user-form'} do
+          %h5
+            Add more users
+          %hr.no-margin
+          .field.medium-top-margin
+            = text_field_tag :user_list, nil, :class=>"input tagsinput add-users-tagsinput", :placeholder => 'Add Users'
+          .field
+            = hidden_field_tag :group_id, @group.id
+          .medium.primary.metro.btn
+            = submit_tag "Add Users", :id => 'add-users-button'
+            /= f.submit "Add Users"
+          .medium.btn.primary.medium
+            %a.switch.weighted{"gumby-trigger" => "|#add-user-modal", href: "#"} 
+              Cancel

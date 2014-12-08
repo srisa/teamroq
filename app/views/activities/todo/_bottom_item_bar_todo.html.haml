@@ -1,0 +1,8 @@
+.bottom-item-bar
+  .row
+    .eight.columns
+      .item-wrapper
+        = link_to raw("<i class='fa fa-comment'></i>#{pluralize(todo.comments.count,'Comment')}"),"/todos/#{todo.id}/activitycomments/#{activity.id}" , :class => "show-comment-btn", :id=> "show-comment-activity#{activity.id}", :remote => true
+  .row
+    .twelve.columns
+      .comment-section{:id => "comment-section-activity#{activity.id}"}

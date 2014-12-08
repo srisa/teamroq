@@ -1,0 +1,24 @@
+= form_for [@attachable,@document], :html=>{:multipart=>true} do |f|
+  - if @document.errors.any?
+    #error_explanation
+      %h5= "#{pluralize(@document.errors.count, "error")} prohibited this document from being saved:"
+      %ul
+        - @document.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name, class: "input"
+  
+
+  - f.fields_for :document_versions do |v|
+    .field
+      = v.file_field :file
+
+    .field
+      = v.label :release_note
+      = v.text_field :release_note, class: "input"
+  
+  .row.medium-top-margin
+    .medium.rounded.primary.metro.btn
+      = f.submit 'Save Document',:class=>'weighted'

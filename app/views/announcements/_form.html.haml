@@ -1,0 +1,15 @@
+= form_for [@announcable,@announcement] do |f|
+  - if @announcement.errors.any?
+    #error_explanation
+      %h5= "#{pluralize(@announcement.errors.count, "error")} prohibited this announcement from being saved:"
+      %ul
+        - @announcement.errors.full_messages.each do |msg|
+          %li= msg
+  .fieldset
+    %legend
+      %h5
+        Create an announcement
+    .field
+      =f.text_area :content, :rows => 5, :placeholder => "Enter content here", :class=> "input textarea"
+  .medium.rounded.primary.metro.btn
+    = f.submit 'Save'

@@ -1,0 +1,11 @@
+var todoHistory = $("a#todo-history");
+todoHistory.attr("href","#");
+todoHistory.removeAttr('data-remote')
+todoHistory.removeAttr('data-method')
+
+$('.state-results').html('<%= j render partial: "state_history_view", collection: @states, as: :state %>');
+$("a#todo-history").click(event,function(){
+	event.stopPropagation();
+	event.preventDefault();
+	$('.state-results').toggle();
+});

@@ -1,0 +1,26 @@
+$breadcrumb-height: 36px;
+$breadcrumb-border-radius: 4px;
+$breadcrumb-background-color: $white;
+
+.breadcrumb {
+  display: block;
+  background: $breadcrumb-background-color;
+  padding: 0 10px;
+  @include border-radius($breadcrumb-border-radius);
+  @include line-and-height($breadcrumb-height);
+  li {
+    display: table-cell;
+    a{
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+    &:after {
+      content: "\\";
+      padding: 0 10px;
+    }
+    &:last-child:after {
+      content: "";
+      padding: 0;
+    }
+  }
+}

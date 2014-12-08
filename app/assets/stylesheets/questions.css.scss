@@ -1,0 +1,44 @@
+.voting-icon{
+  color: #5a5c5e;
+  font-size: 3em;
+}
+
+.vote-number{
+  color: #5a5c5e;
+  font-size: 2em;
+}
+
+.answer-box{
+
+  p{
+    line-height: 1.4em;
+  }
+}
+
+.leader-attr {
+  margin-left: 5px;
+  background-color: #e5e5e5;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.answersection {
+  border-bottom: 1px solid $border-color;
+  margin-bottom: 15px;
+}
+
+#question_topic_list_tag{
+  min-width: 200px;
+  font-size: 1rem;
+  font-family: "Open Sans";
+  font-weight: 300;
+}
+
+.check-mark-section{
+  padding:15px;
+}
+
+a.check-mark-icon{
+  margin-left: 20px;
+  color: $success-color;
+}

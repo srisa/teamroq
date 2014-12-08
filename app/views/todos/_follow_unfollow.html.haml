@@ -1,0 +1,6 @@
+- unless current_user.follows_todo?(@todo)
+  .medium.primary.btn.metro.rounded
+    =link_to "Follow", follow_todo_list_todo_path(@todo_list,@todo), :method =>'put', :remote=> :true, :class => "weighted"
+- else
+  .medium.danger.btn.metro.rounded
+    =link_to "Unfollow", unfollow_todo_list_todo_path(@todo_list,@todo), :method =>'put', :remote=> :true, :class=> "weighted"

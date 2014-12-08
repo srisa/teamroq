@@ -1,0 +1,74 @@
+.big-left-margin.full
+  .row.padding-box
+    .seven.columns
+      .row.white-b-box
+        .padding-box
+          .row
+            %ul.breadcrumb
+              %li
+                = link_to @project.name.upcase, @project
+              %li
+                = link_to "DISCUSSIONS", "/projects/#{@project.to_param}/discussions"
+          .row
+            .twelve.columns
+              %h5
+                = @discussion.title
+          .row
+            / = link_to @discussion.user.name , @discussion.user
+            %p.tagged_discussion.concise-text
+              = @discussion.content
+      .row.small-margin-top
+        - @discussion.comments.recent.each do |comment|
+          .row.border-bottom-light
+            .small-top-padding.padding-box
+              .two.column.image
+                = image_tag comment.user.profile_picture.url(:small), :class => "small-image"
+              .eleven.columns
+                = link_to comment.user_name , comment.user, :class => "user-name-l"
+                %span
+                  %small.grey
+                    = time_ago_in_words(comment.created_at)
+                    ago
+                .row
+                  .twelve.columns
+                    %p.concise-text
+                      = comment.content
+      .row.medium-top-margin
+        .eight.columns.push_one
+          = form_for [@commentable, Comment.new] do |f|
+            .field
+              = f.text_area :content, :rows=> 3,  :placeholder => 'leave a comment...', :class => 'input textarea'
+            .field
+              .primary.medium.btn.metro.rounded
+                = f.submit "Submit" 
+
+    .five.columns
+      .row.small-margin-top
+        .six.columns.followers_count{:title => 'Number of Watchers'}
+          .medium.secondary.metro.rounded.btn.followers-count-btn
+            = link_to pluralize(@followers_count, 'Watcher'), '#', :class=> 'followers-number'
+        .six.columns.follow_unfollow
+          = render partial: "follow_unfollow"
+      .row.show-followers
+        -@watchers.each do |watcher|
+          .row.small-margin-top
+            .two.columns
+              .image.rounded{:title => "#{watcher.name}"}
+                =image_tag watcher.profile_picture.url(:little)
+            .ten.columns
+              =link_to watcher.name, watcher
+      .row
+        .twelve.columns
+          .padding-box
+            = form_tag add_followers_project_discussion_path(@project,@discussion), :method => 'put', :id => 'add-followers-form' do
+              %h5.grey
+                Add Watchers
+              .field
+                = text_area_tag :followers_list, nil, :class=>"input tagsinput add-followers-tagsinput"
+              .medium.primary.metro.btn.rounded
+                = submit_tag "Add Watchers", :id => 'add-followers-button'
+
+  
+  
+
+

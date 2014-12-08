@@ -1,0 +1,17 @@
+.big-left-margin
+  %h3 Listing Tasks Lists
+
+  %table
+    %tr
+      %th
+      %th
+      %th
+
+    - @todo_lists.each do |todo_list|
+      %tr
+        %td= link_to 'Show', [@project,todo_list]
+        %td= link_to 'Edit', edit_project_todo_list_path(@project,todo_list)
+        %td= link_to 'Destroy', project_todo_list_path(@project,todo_list), :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+  %br
+

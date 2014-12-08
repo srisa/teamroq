@@ -1,0 +1,39 @@
+.row
+  .three.columns.big-padding-box.submenu
+    = link_to @group  do
+      %i.fa.fa-fw.fa-lg.fa-newspaper-o
+      &nbsp;&nbsp;Dashboard
+    = link_to users_group_path(@group) , :class=> " active" do
+      %i.fa.fa-fw.fa-lg.fa-user
+      &nbsp;&nbsp;Users
+    = link_to "/groups/#{@group.to_param}/announcements"  do
+      %i.fa.fa-fw.fa-lg.fa-bullhorn
+      &nbsp;&nbsp;Announcements
+    = link_to "/groups/#{@group.to_param}/documents"  do
+      %i.fa.fa-fw.fa-lg.fa-file-o
+      &nbsp;&nbsp;Documents    
+    %hr
+    %small
+      %a.add-user-btn.switch{"gumby-trigger" => "#add-user-modal", href: "#"}
+        %i.fa.fa-plus.fa-lg
+        ADD USER
+  .nine.columns
+    %h4
+      Group Members
+      %hr
+    - @users.each_slice(4) do |slice|
+      .row.medium-top-margin
+        - slice.each do |user|
+          .three.columns.small-top-margin
+            %ul.two_up.tiles
+              %li
+                = image_tag user.profile_picture.url(:medium)
+              %li
+                %p
+                  = link_to user.name, user_path(user)
+                .reputation_score.medium.btn.info{title: "Reputation Score"}
+                  %a{href: "#"}
+                    = user.get_total_points
+    .medium-top-margin
+      = will_paginate(@users)
+  = render partial: 'add_user_form'

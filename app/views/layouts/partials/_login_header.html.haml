@@ -1,0 +1,10 @@
+.navbar#navbar1.loginNavbar
+  .row
+    .two.columns.logo.white.large
+      %a(href="/")
+        =image_tag("teamroq.png")
+    %a.toggle{"gumby-trigger" => "#navbar1 > .row > ul", href: "#"}
+      %i.fa.fa-bars
+    %ul.two.columns.push_nine
+      %li
+        = link_to "LOGIN", new_user_session_path, :class=> "weighted strong"

@@ -1,0 +1,6 @@
+- unless current_user.follows_user?(@user)
+  .medium.success.metro.btn.rounded.pull-right
+    =link_to "Follow", follow_user_path(@user), :method =>'patch',:class=> "weighted", :remote=> :true
+- else
+  .medium.primary.btn.metro.rounded.pull-right
+    =link_to "Unfollow", unfollow_user_path(@user), :method =>'patch', :remote=> :true, :class=> "weighted"

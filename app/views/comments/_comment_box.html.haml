@@ -1,0 +1,21 @@
+
+.wrapper-box
+.row.commentlist{:id => "comment-list-#{commentable.class.name.downcase}#{commentable.id}"}
+  - @commentable.comments.reverse.each do |comment|
+    .row
+      .one.column
+        = image_tag comment.user.profile_picture.url(:little), :class => "middle-image"
+      .eleven.columns
+        %span.subbar-comment-name
+          %a{href: user_path(comment.user)} 
+            = comment.user_name
+          %span.grey.time-ago
+            = time_ago_in_words comment.created_at
+            ago
+        %p.concise-text.subbar-comment-name
+          = comment.content
+.row.small-top-margin
+  .eleven.columns.push_one.field
+    = form_for [commentable, Comment.new], :remote=> true, :html => {:id => "#{commentable.class.name.downcase}#{commentable.id}-comment-form"}  do |f|
+      .field.pad-right
+        = f.text_field :content , :placeholder => "Enter Comment", :class=> "comment-input", :id => "comment-box-#{commentable.class.name.downcase}#{commentable.id}"

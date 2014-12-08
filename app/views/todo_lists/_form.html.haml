@@ -1,0 +1,29 @@
+= form_for [@project,@todo_list] do |f|
+  - if @todo_list.errors.any?
+    #error_explanation
+      %h5= "#{pluralize(@todo_list.errors.count, "error")} prohibited this todo_list from being saved:"
+      %ul
+        - @todo_list.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    %h5
+      - if action_name == "edit"
+        Amend a Task List
+      - else
+        Add a Task List
+
+    %hr.no-margin
+    .field.small-top-margin
+      = f.text_field :name, :class=> "input", :placeholder=> "Enter a name for the task list"
+
+    .medium-top-margin
+      - if action_name == "edit"
+        .medium.rounded.primary.metro.btn
+          = f.submit "Amend Task List"
+      - else
+        .medium.rounded.primary.metro.btn
+          = f.submit "Add Task List"
+      
+      = link_to "Back", :back, :class => "weighted pull_right"
+
+  

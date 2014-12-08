@@ -1,0 +1,37 @@
+.big-left-margin
+  - @answers.each do |answer|
+    %ul.unstyled
+      %li
+        %p
+          = link_to "Answer" , [@question, answer]
+          was added 
+          = time_ago_in_words answer.created_at
+          ago
+        %p
+          %strong
+            = answer.content 
+        %span
+          %small
+            - answer.comments.recent.each do |comment|
+              %ul.unstyled
+                %li
+                  %small
+                    = link_to comment.user_name , comment.user
+                    added a
+                    = link_to "Comment", [answer,comment]
+                    = time_ago_in_words comment.created_at
+                    ago
+                  %br
+                    = comment.content
+      
+      
+            %br
+            = form_for [answer, Comment.new] do |f|
+              #new_comment.add_comment
+              = f.hidden_field :commentable_id, :value => answer.id
+              = f.hidden_field :user_id, :value => current_user.id
+              = f.hidden_field :commentable_type, :value => answer.class.name
+              = f.text_field :content, :size => 55,  :value => 'leave a comment...', :onfocus => 'this.select()', :class => 'comment_form'
+              = f.submit "Submit"
+  %hr
+  = link_to 'New Answer', new_question_answer_path(@question)

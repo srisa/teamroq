@@ -1,0 +1,14 @@
+.row.votesection
+  - votable_class = votable.class.name.downcase
+  .twelve.columns.centered-text.small-bottom-margin
+    -if current_user.id == votable.user.id
+      = link_to raw('<i class="fa fa-chevron-up fa-lg fa-no-p voting-icon"></i>'),'#', :class=> 'disabled-vote', :id => "upvote-#{votable_class}#{votable.id}"
+    -else
+      = link_to raw('<i class="fa fa-chevron-up fa-lg fa-no-p voting-icon"></i>'), polymorphic_path(votable, :action => 'vote', :type => 'up'), method: "post", remote: true, :class=> 'vote', :id => "upvote-#{votable_class}#{votable.id}"
+  .twelve.columns.centered-text
+    = link_to votable.rating.to_i, "#", :class=>'vote-number', :id => "votenumber-#{votable_class}#{votable.id}"
+  .twelve.columns.centered-text.small-top-margin
+    -if current_user.id == votable.user.id
+      = link_to raw('<i class="fa fa-chevron-down fa-lg fa-no-p voting-icon"></i>'),'#', :class=> 'disabled-vote', :id => "downvote-#{votable_class}#{votable.id}"
+    -else
+      = link_to raw('<i class="fa fa-chevron-down fa-lg fa-no-p voting-icon"></i>'), polymorphic_path(votable, :action => 'vote', :type => 'down'), method: "post", remote: true, :class=> 'vote', :id => "downvote-#{votable_class}#{votable.id}"

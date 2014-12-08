@@ -1,0 +1,2 @@
+%li.post-item
+  = render :partial => "activities/#{activity.trackable_type.underscore}/#{activity.action}", :locals => {:activity => activity}

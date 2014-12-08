@@ -1,0 +1,62 @@
+.row
+  .three.columns
+    .row
+      .twelve.columns
+        .fixme{"gumby-fixed" =>"top"}
+          .big-padding-box.submenu
+            = link_to "/questions" , :class=> "active" do
+              %i.fa.fa-fw.fa-lg.fa-newspaper-o
+              &nbsp;&nbsp;Topics
+            %hr
+            %h5
+              QUESTIONS
+            = link_to "/myquestions/created"  do
+              %i.fa.fa-fw.fa-lg.fa-pencil-square-o
+              &nbsp;&nbsp;Created By Me
+            = link_to "/myquestions/following" do
+              %i.fa.fa-fw.fa-lg.fa-paper-plane-o
+              &nbsp;&nbsp;Followed By Me
+            %hr
+            = link_to "Ask a Question", new_question_path , :class=> "weighted"  
+  .nine.columns
+    .row.medium-top-margin
+      %h3
+        Welcome to Knowledge base
+
+    .row.search-tag-section
+      .two.columns.search-tag-label
+        Type to find a topic:
+      .three.columns.field
+        %input.xxwide.input.search-topic-query{:id => 'topic-search', :type => "text", :placeholder => "Type Topic name to search here.."}
+
+    %h3
+      Topics
+
+
+
+    - @tags.each_slice(3) do |slice|
+      .row
+        - slice.each do |tag|
+          .four.columns.background-box.medium-top-margin
+            .margin-box
+              %h4.header-box
+                = link_to tag.name.titleize, tag_path(tag.name)
+            %hr.no-margin
+            .filler-box
+              .margin-box
+                .row
+                  .four.columns.push_one
+                    %p.title-box
+                      = Question.tagged_with(tag.name).count
+                    %p.special-text-box
+                      Questions
+                  .four.columns.push_one
+                    %p.title-box
+                      = Topic.followers_size(tag.name)
+                    %p.special-text-box
+                      Followers
+    .medium-top-margin
+      = will_paginate(@tags)
+
+            
+      

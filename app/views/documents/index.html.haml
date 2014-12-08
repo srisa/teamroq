@@ -1,0 +1,19 @@
+%h1 Listing documents
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+
+  - @documents.each do |document|
+    %tr
+      %td= document.name
+      %td= link_to 'Show', [@attachable,document]
+      %td= link_to 'Edit', [:edit, @attachable,document]
+      %td= link_to 'Destroy', [@attachable, document], :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Document', [:new, @attachable, :document]

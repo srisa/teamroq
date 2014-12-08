@@ -1,0 +1,7 @@
+%b.grey
+  = state.event.capitalize
+  by
+  = User.find(state.whodunnit).name
+  on
+  = state.created_at.strftime('%d %b %Y')
+  %br

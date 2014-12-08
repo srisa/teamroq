@@ -1,0 +1,57 @@
+//sidebar
+.side-header{
+  background-color: $sidebar-background-color;
+}
+.fixme{
+  height: 100%;
+  @include hidden(all-phones);
+  @include hidden(tablets);
+  @include visible(desktop);
+}
+
+
+.task-bar-right,.main-bar-down{
+  @include hidden(all-phones);
+  @include hidden(tablets);
+  @include hidden(portrait-tablets);
+  @include visible(desktop);
+}
+.side-bar {
+    padding-top: 60px;
+    height: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    @include box-shadow(inset 0 0 10px 3px rgba(0,0,0,0.22));
+    background: $sidebar-background-color;
+
+  h3{
+    // color: $sidebar-header-color;
+    color : $sidebar-font-color;
+    font-weight: 400;
+    background-color: $sidebar-header-bg-color;
+    font-size: 1.3em;
+    padding: 10px;
+    margin: 0;
+  }
+
+  a{
+    display: block;
+    font-size: 1.1em;
+    background-position: 20px center;
+    color: $sidebar-font-color;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    &:hover, &.active{
+    background-color: $sidebar-hover-color;
+    color: #beccd9;
+    @include box-shadow(inset 0 -3px 5px -5px rgba(0,0,0,0.22));
+    }
+  }
+}
+
+
+.left-side-border{
+  border-left: 1px solid $border-color; 
+}

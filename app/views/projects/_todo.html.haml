@@ -1,0 +1,20 @@
+/ each todo item
+.open_todo_item.row
+  .two.columns
+    .pretty.state2.medium.btn.status_btn
+      %a
+        = task.state.capitalize
+        %span.comment-number{:title => 'Number of Comments'}
+          =task.comments.count
+  .four.columns
+    .each_todo
+      =link_to task.name , [task.todo_list,task]
+  .three.columns
+    = time_ago_in_words(task.target_date)
+    - if Date.current < task.target_date
+      to expire
+    - else
+      ago expired       
+  .three.columns
+    .pretty.info.medium.btn.assigned_btn{title: "Assigned to"}
+      = link_to task.user.name, user_path(task.user)

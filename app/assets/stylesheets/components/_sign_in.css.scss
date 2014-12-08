@@ -1,0 +1,15 @@
+.sign-in-box{
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-top: 1em;
+  background-color: white;
+  border: 1px solid $horizontal-rule-color;
+  @include border-radius(4px); 
+}
+.login-box{
+  padding: 50px;
+  margin-top: 2em;
+  background-color: white;
+  border: 1px solid $horizontal-rule-color;
+  @include border-radius(4px);
+}

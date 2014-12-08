@@ -1,0 +1,31 @@
+= form_for @project do |f|
+  - if @project.errors.any?
+    .alert.alert-error
+      %h3= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+      - @project.errors.full_messages.each do |msg|
+        %p= msg
+  %fieldset
+    %h5
+      - if action_name == "edit"
+        Amend a Project
+      - else
+        Add a Project
+    %ul
+      %li
+        .field.small-top-margin
+          = f.label :name, class: "inline"
+          = f.text_field :name,:class=>"input project-name", :id => 'project-name', :placeholder => 'Enter Project name'
+      %li
+        .field
+          = f.label :description, class: "inline"
+          = f.text_field :description,:class=>"input project-description", :id => 'project-description', :placeholder => 'Enter Project description'
+    - unless action_name == "edit"
+      .field
+        = f.label :user_list, class: "inline"
+        = text_field_tag :user_list, nil, :class=>"input tagsinput add-users-tagsinput", :placeholder => 'Start typing users name'
+  
+    .row.medium-top-margin
+      .medium.rounded.primary.metro.btn
+        = f.submit 'Save Project' ,:class=>'weighted'
+      .medium.rounded.secondary.metro.btn.pull_right
+        = link_to 'Back', :back, :class=> "weighted"

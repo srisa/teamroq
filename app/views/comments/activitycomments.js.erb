@@ -1,0 +1,10 @@
+$("#comment-section-activity<%=@activity.id%>").html('<%= escape_javascript(render partial: "comments/activity_comment_box", locals: {commentable: @commentable,activity:@activity}) %>');
+
+$("a#show-comment-activity<%=@activity.id%>").attr("href","#");
+$("a#show-comment-activity<%=@activity.id%>").removeAttr("data-remote");
+
+$("a#show-comment-activity<%=@activity.id%>").click(event,function(){
+  event.stopPropagation();
+  event.preventDefault();
+  $("#comment-section-activity<%=@activity.id%>").toggle();
+});

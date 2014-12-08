@@ -1,0 +1,19 @@
+.big-left-margin
+  .row.small-top-margin
+    .six.columns
+      %h4
+        = @todo_list.name.titleize
+    .six.columns
+      .medium.rounded.primary.btn.metro.pull-right
+        = link_to "Open Tasks" , project_todo_list_path(@project,@todo_list), :class=> "weighted"
+
+  - @closed_todos.each_slice(3).each do |slice|
+    .row
+      - slice.each do |todo|
+        .four.columns
+          = render "common/todo", :todo => todo
+  - unless @closed_todos.presence
+    .row
+      .twelve.columns.medium-top-margin
+        %h4.grey.centered-text.medium-top-margin
+          No Tasks yet.Tasks closed will appear here.

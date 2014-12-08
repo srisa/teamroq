@@ -1,0 +1,29 @@
+/*
+We highly recommend you use SASS and write your custom styles in sass/_custom.scss.
+However, this blank file is available if you prefer
+*/
+.add-followers-tagsinput{
+  height: auto;
+  min-height: 100px;
+}
+.show-followers{
+	padding:10px;
+	display:none;
+}
+
+.tick-box{
+  visibility: hidden;
+  float: right;
+  a{
+  	i{
+  		min-width: 0px;
+  	}
+  }
+}
+
+.task-sub-heading{
+  margin-bottom: 0.5em;
+  font-size: 1.2em;
+}
+
+

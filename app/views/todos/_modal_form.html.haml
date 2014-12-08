@@ -1,0 +1,33 @@
+.modal{:id => "todo-modal#{todo_list.id}"}  
+  .content
+    %a.close.switch{"gumby-trigger" => "|#todo-modal#{todo_list.id}"}
+      %i.fa.fa-close
+    .row
+      .ten.columns.centered
+        = form_for [todo_list,Todo.new], :html => {:id => "form-todo#{todo_list.id}"} do |f|
+          / %fieldset
+          /   %legend
+          %h5
+            Add a Task
+          .field
+            =f.text_field :name, :placeholder => "Title", :class=> "input"
+          .field  
+            =f.text_area :details,:rows => 3, :placeholder => "Description here", :class=> "input textarea"
+          
+          .field
+            .ll-skin-cangas
+              = f.text_field :target_date, :placeholder => "Enter tentative completion date", :class=> "input todo-calendar-field", :id => "calendar-field#{todo_list.id}"
+          .field
+            %input.input.search-user{:id => "add-user#{todo_list.id}",:placeholder => "Fill this if assignee is other than you"}
+          .field
+          .field  
+            =f.hidden_field :user_id,:rows => 2,  :class=> "input userid"
+          .row
+            .three.columns
+              .medium.rounded.primary.metro.btn
+                = f.submit "Add Task"
+            .four.columns
+              .btn.secondary.medium.metro.rounded
+                %a.switch{"gumby-trigger" => "|#todo-modal#{todo_list.id}", href: "#"} 
+                  %b 
+                    Cancel

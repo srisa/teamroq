@@ -1,0 +1,11 @@
+.big-left-margin
+  %p#notice= notice
+
+  %p
+    %b Content:
+    = sanitize @answer.content
+  %br
+  = render partial: "comments/comment_partial"
+  \|
+  = link_to 'Edit', edit_question_answer_path(@question,@answer)
+  = link_to 'Back', question_path(@question)

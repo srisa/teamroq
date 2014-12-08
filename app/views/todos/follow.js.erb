@@ -1,0 +1,2 @@
+$('.follow_unfollow').html('<%= escape_javascript(render partial: "todos/follow_unfollow") %>');
+$('.followers-count-btn').html('<%= escape_javascript(link_to pluralize(@followers_count, "Watcher"), "#", :class=> "followers-number") %>');

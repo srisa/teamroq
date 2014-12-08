@@ -1,0 +1,21 @@
+.row.right-top-section 
+  .row
+    .twelve.columns
+      .row
+        .four.columns.follow_unfollow
+          = render partial: "follow_unfollow"
+        .eight.columns.followers_count{:title => 'Number of Followers'}
+          = link_to pluralize(@followers_count, 'Follower'), '#', :class=> 'followers-number'
+          
+  .row
+    .twelve.columns
+  .row
+    .twelve.columns
+      -if @todo.can_close?
+        .medium.danger.btn.metro.rounded
+          = link_to 'Close', close_todo_list_todo_path(@todo_list,@todo), :method =>'put', :class => 'change-state weighted'
+      -else 
+        .medium.danger.btn.metro.rounded
+          = link_to 'Reopen', reopen_todo_list_todo_path(@todo_list,@todo), :method =>'put', :class => 'change-state weighted'      
+
+ 

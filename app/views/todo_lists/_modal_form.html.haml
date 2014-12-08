@@ -1,0 +1,15 @@
+.modal{:id => "todolist-modal"}  
+  .content
+    %a.close.switch{"gumby-trigger" => "|#todolist-modal"}
+      %i.fa.fa-close
+    .row
+      .ten.columns.centered
+        = form_for [project,TodoList.new] do |f| 
+          %h5
+            Add a task list
+          .field.medium-top-margin
+            = f.text_field :name, :class=> "input", :placeholder=> "Enter a name for the task list"
+
+          .medium.rounded.primary.metro.btn.pull_right   
+            = f.submit 'Save TaskList'
+

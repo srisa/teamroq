@@ -1,0 +1,58 @@
+.row
+  .three.columns.big-padding-box.submenu
+    = link_to @project  do
+      %i.fa.fa-fw.fa-lg.fa-newspaper-o
+      &nbsp;&nbsp;Dashboard
+    = link_to users_project_path(@project) do
+      %i.fa.fa-fw.fa-lg.fa-user
+      &nbsp;&nbsp;Users
+    = link_to "/projects/#{@project.to_param}/discussions"  do
+      %i.fa.fa-fw.fa-lg.fa-send-o
+      &nbsp;&nbsp;Discussions
+    = link_to standup_project_path(@project) do
+      %i.fa.fa-fw.fa-lg.fa-coffee
+      &nbsp;&nbsp;Standup Meeting
+    = link_to "/projects/#{@project.to_param}/documents" , :class=> "active"do
+      %i.fa.fa-fw.fa-lg.fa-file-o
+      &nbsp;&nbsp;Documents
+    = link_to "/projects/#{@project.to_param}/charts"do
+      %i.fa.fa-fw.fa-lg.fa-line-chart
+      &nbsp;&nbsp;Charts
+    %hr
+    %small
+      %a.add-user-btn.switch{"gumby-trigger" => "#add-doc-modal", href: "#"}
+        %i.fa.fa-plus-square
+        ADD DOCUMENT
+    %hr
+    %h6
+      FILTERS
+    = link_to "/projects/#{@project.to_param}/documents/filter/today" , :class=> "filter-link" do
+      %i.fa.fa-w.fa-bolt
+      UPDATED TODAY
+    = link_to "/projects/#{@project.to_param}/documents/filter/popular" , :class=> "filter-link" do
+      %i.fa.fa-w.fa-star
+      MOST POPULAR
+    = link_to "/projects/#{@project.to_param}/documents/filter/byme" , :class=> "filter-link" do
+      %i.fa.fa-w.fa-user
+      ADDED BY ME
+  .nine.columns
+    %h4
+      Documents
+    - @documents.each_slice(3) do |slice|
+      .row
+        - slice.each do |document|
+          .four.columns.medium-top-margin
+            %span
+              = render partial: "documents/document_type", locals: {document: document}
+            %span.doc-image-text
+              = link_to truncate(document.name.titleize,length: 20), download_project_document_path(@project, document), :class=>"doc-title"
+            %span.doc-image-text  
+              = document.document_versions.count
+              |
+              = link_to "Previous Versions", [@project, document]
+    .medium-top-margin
+      = will_paginate(@documents)
+       
+  = render partial: "documents/document_partial"
+
+

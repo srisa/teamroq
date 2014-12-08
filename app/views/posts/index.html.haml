@@ -1,0 +1,34 @@
+.big-left-margin
+  = form_for [@postable,@post] do |f|
+    - if @post.errors.any?
+      #error_explanation
+        %h5= "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
+        %ul
+          - @post.errors.full_messages.each do |msg|
+            %li= msg
+
+    %fieldset
+      
+      = f.text_area :content, :class=> 'tagged_text', :placeholder => 'Post your thoughts!'
+      %br
+      = f.submit "Post This", :class=> 'btn btn-primary pull-right'
+
+  %hr
+  - @posts.reverse.each do |post|
+    %ul.activity-list
+      %li
+        %small
+          = link_to post.user_name , post.user
+          added a 
+          = link_to "Post" , post
+          = time_ago_in_words post.created_at
+          ago
+      %p.tagged_post
+        = post.content
+      - post.documents.each do |document|
+        = link_to document.file_file_name , document_post_path(post,@document)
+      %ul.inline
+        %small
+          =link_to "View", [post]
+  %br
+

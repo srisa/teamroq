@@ -1,0 +1,24 @@
+.big-left-margin
+  .row
+    %h4 Your Groups
+    %span.pull-right.medium.metro.rounded.btn.primary
+      = link_to 'Create a Group', new_group_path, :class=> "weighted"
+
+
+  - @groups.each_slice(3) do |slice|
+    .row
+      - slice.each do |group|
+        .four.columns.background-box.medium-top-margin
+          .margin-box
+            %h4.header-box
+              = link_to group.name.titleize, group
+          %hr.no-margin
+          .filler-box
+            .margin-box
+              %p.group-title-box
+                = group.users.count
+                Members
+
+      .medium-top-margin
+        = will_paginate(@groups)
+

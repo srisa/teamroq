@@ -1,0 +1,32 @@
+@import "activities";
+@import "announcements";
+@import "datepicker";
+@import "jquery-ui";
+@import "jquery.tagsinput";
+@import "notifications";
+@import "posts";
+@import "projects";
+@import "questions";
+@import "todos";
+@import "topic";
+@import "users";
+@import "search";
+
+.only-desktop{
+  @include visible(large-screens);
+  @include visible(desktop);
+  @include hidden(all-phones);
+  @include hidden(tablets);
+  @include hidden(portrait-tablets);
+}
+
+.except-desktop{
+  @include hidden(desktop);
+  @include hidden(large-screens);
+  @include visible(all-phones);
+  @include visible(tablets);
+  @include visible(portrait-tablets);
+
+}
+
+

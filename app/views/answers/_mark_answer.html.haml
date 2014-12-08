@@ -1,0 +1,12 @@
+-@question=answer.question
+- if answer.answer_mark
+  -if current_user == @question.user
+    .danger.btn.medium.metro.rounded
+      = link_to "Remove", polymorphic_url(answer, :action => 'markanswer', :type => 'unmark'), method: "post", remote: true, :id => "unmark-#{answer.id}",:title => "Remove this answer as accepted answer"
+  - else
+    %a.check-mark-icon.centered-text{:title => "Accepted answer"}
+      %i.fa.fa-check.fa-lg
+- else
+  -if current_user == @question.user
+    .primary.btn.medium.metro.rounded
+      = link_to "Accept", polymorphic_path(answer, :action => 'markanswer', :type => 'mark'), method: "post", remote: true, :id => "mark-#{answer.id}",:title => "Mark this answer as accepted answer"

@@ -1,0 +1,62 @@
+.row
+  .three.columns.big-padding-box.submenu
+    = link_to @project , :class=> "active" do
+      %i.fa.fa-fw.fa-lg.fa-newspaper-o
+      &nbsp;&nbsp;Dashboard
+    = link_to users_project_path(@project) do
+      %i.fa.fa-fw.fa-lg.fa-user
+      &nbsp;&nbsp;Users
+    = link_to "/projects/#{@project.to_param}/discussions"do
+      %i.fa.fa-fw.fa-lg.fa-send-o
+      &nbsp;&nbsp;Discussions
+    = link_to standup_project_path(@project) do
+      %i.fa.fa-fw.fa-lg.fa-coffee
+      &nbsp;&nbsp;Standup Meeting
+    = link_to "/projects/#{@project.to_param}/documents" do
+      %i.fa.fa-fw.fa-lg.fa-file-o
+      &nbsp;&nbsp;Documents
+    = link_to "/projects/#{@project.to_param}/charts"do
+      %i.fa.fa-fw.fa-lg.fa-line-chart
+      &nbsp;&nbsp;Charts
+
+    %hr
+
+
+  .nine.columns
+    .overview_content
+      .row.medium-top-margin
+        .eight.columns
+          %h4
+            = @project.name.titleize
+        .four.columns
+          .medium.primary.btn.metro.rounded.pull-right
+            %a.switch.weighted{"gumby-trigger" => "#todolist-modal", href: "#"}
+              Add Task List
+      .row
+        %p
+          = @project.description
+      - @project.todo_lists.each_slice(4) do |slice|
+        .row
+          - slice.each do |todo_list|
+            .three.columns.light-border-box.medium-top-margin
+              .margin-box
+                %h4.header-box
+                  = link_to todo_list.name.titleize, [@project, todo_list]
+              %hr.no-margin
+              .margin-box.centered-text
+                %h6.big-font
+                  = todo_list.todos.by_open.count
+                  Open tasks
+
+              .margin-box.centered-text
+                .medium.primary.rounded.metro.btn
+                  = link_to "Open", [@project, todo_list], :class=> "weighted"
+              .medium-top-margin
+          
+      
+      = render partial: "todo_lists/modal_form", locals: {project: @project}
+      = render partial: 'add_user_form'
+
+    .main_content
+
+        

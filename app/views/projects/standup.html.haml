@@ -1,0 +1,54 @@
+.row
+  .three.columns.big-padding-box.submenu
+    = link_to @project  do
+      %i.fa.fa-fw.fa-lg.fa-newspaper-o
+      &nbsp;&nbsp;Dashboard
+    = link_to users_project_path(@project) do
+      %i.fa.fa-fw.fa-lg.fa-user
+      &nbsp;&nbsp;Users
+    = link_to "/projects/#{@project.to_param}/discussions"  do
+      %i.fa.fa-fw.fa-lg.fa-send-o
+      &nbsp;&nbsp;Discussions
+    = link_to standup_project_path(@project), :class=> "active" do
+      %i.fa.fa-fw.fa-lg.fa-coffee
+      &nbsp;&nbsp;Standup Meeting
+    = link_to "/projects/#{@project.to_param}/documents" do
+      %i.fa.fa-fw.fa-lg.fa-file-o
+      &nbsp;&nbsp;Documents
+    = link_to "/projects/#{@project.to_param}/charts"do
+      %i.fa.fa-fw.fa-lg.fa-line-chart
+      &nbsp;&nbsp;Charts
+  .nine.columns.small-margin-top
+    %h5
+      Stand up meeting
+    %p
+      Find out the big picture. What your team mates are up to?
+    .row
+      .twelve.columns
+        - @open_todos.each_slice(3) do |slice|
+          .row
+            - slice.each do |user,todos|
+              .four.columns.background-box
+                .margin-box
+                  %h5.header-box
+                    = user.name
+                .standup-content-box.standup-scroll-box
+                  .margin-box
+                    %strong
+                      %span.grey
+                        Working on
+                    %ul
+                      - todos.each do |todo|
+                        %li
+                          %p.todo-concise-text
+                            = link_to todo.name, [todo.todo_list, todo], class: "mls"
+                       
+                    - unless @closed_today[user].nil?
+                      %strong
+                        %span.grey
+                          Recently completed
+                      %ul
+                        - @closed_today[user].each do |todo|
+                          %li
+                            %p.todo-concise-text
+                              = link_to todo.name, [todo.todo_list, todo], class: "mls"

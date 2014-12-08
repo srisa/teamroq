@@ -1,0 +1,46 @@
+.big-left-margin
+  .row.padding-box
+    .seven.columns
+      .margin-box
+        - @post.topic_list.each do |topic|
+          %span.primary.badge
+            = link_to topic , "#", :class=>"weighted"
+      .row.background-box
+        .padding-box
+          .row.border-bottom-light
+            .twelve.columns
+              %h5
+                = @post.title
+          .row.small-top-margin
+            .one.column.image.circle
+              = image_tag @post.user.profile_picture.url(:small)
+            .eleven.columns
+              = link_to @post.user.name , @post.user
+              %p.tagged_post.concise-text
+                = @post.content
+      .row.small-margin-top
+        - @post.comments.recent.each do |comment|
+          .row.border-bottom-light
+            .small-top-padding
+              .one.column.image.circle
+                = image_tag comment.user.profile_picture.url(:little)
+              .eleven.columns
+                = link_to comment.user_name , comment.user
+                %span
+                  %small.grey
+                    = time_ago_in_words(comment.created_at)
+                    ago
+                .row
+                  .eight.columns
+                    %p.concise-text
+                      = comment.content
+      .row.medium-top-margin
+        .eight.columns.push_one
+          = form_for [@commentable, Comment.new] do |f|
+            .field
+              = f.text_area :content, :rows=> 3,  :placeholder => 'leave a comment...', :class => 'input textarea'
+            .field
+              .primary.medium.btn.metro.rounded
+                = f.submit "Submit" 
+
+    

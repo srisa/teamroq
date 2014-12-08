@@ -1,0 +1,6 @@
+<% if @page > @totalPages %>
+$(".show-more-user-link").html('<%=escape_javascript(link_to "Show More", "#") %>');
+<%else %>
+$(".show-more-user-link").html('<%=escape_javascript(link_to "Show More", members_project_path(:page => @page), method: :get, remote: :true) %>');
+<%end%>
+$(".team_list").html('<%= escape_javascript(render partial: "member", collection: @members, as: :member) %>');

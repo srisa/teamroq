@@ -1,0 +1,75 @@
+.big-left-margin
+  .row
+    .twelve.columns
+      .padding-box.user-name-box
+        .row
+          .two.columns.image
+            = image_tag @user.profile_picture.url(:medium)
+            %h4.blue
+              = @user.name
+            %h5
+              - points = @user.get_total_points
+              %i.fa.fa-star{:title => 'Reputation Score'}
+              = points
+            %h6
+              %i.fa.fa-at{:title=>'Designation'}
+              %b
+                - if @user.designation
+                  = @user.designation
+                - else
+                  Not Available
+            %h6
+              %span.block
+                %i.fa.fa-envelope{:title=>'Email'}
+                = @user.email
+            %h6
+              %span
+                %i.fa.fa-location-arrow{:title=>'Desk'}
+                - if @user.desk
+                  = @user.desk
+                - else
+                  No Location Available
+          .nine.columns  
+            .row
+              .four.columns.pull-right.follow-box
+                - if !@user.eql? current_user
+                  = render partial: "follow_unfollow"
+                - if @user.eql? current_user
+                  .medium.primary.btn.metro.rounded
+                    =link_to "Edit", edit_user_path(@user), :class=> 'weighted follow'
+   
+            .row.medium-top-margin
+              .six.columns
+                %h4
+                  Skills
+                - unless @user.skill.presence
+                  %h3.filler-text
+                    No Skills Available
+                - else
+                  = @user.skill
+              .six.columns
+                %h4
+                  Description
+                - unless @user.detail.presence
+                  %h3.filler-text
+                    No Description Available
+                - else
+                  = @user.detail
+            .row.medium-top-margin
+              .twelve.columns
+                %h4
+                  Badges
+                .row
+                  .three.columns            
+                    - @badges.each do |badge|
+                      .gamification-badge
+                        %h6
+                          = badge.type.name
+                        %span
+                          =badge.name
+
+                    - unless @badges.presence  
+                      %h3.filler-text
+                        No Badges available
+
+

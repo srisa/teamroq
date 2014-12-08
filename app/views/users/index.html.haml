@@ -1,0 +1,31 @@
+.row
+  .three.columns
+    .row
+      .twelve.columns
+        .fixme{"gumby-fixed" =>"top"}
+          .big-padding-box.submenu
+            = link_to "Dashboard", "/" , :class=> "submenu-icon-dashboard "
+            = link_to "Users", "/users" , :class=> "submenu-icon-users active"
+            %a.submenu-icon-discussion{ :href => "/users/invitation/new", "data-step" => "1", "data-intro" => "Invite more users by giving their company email id"}
+              Invite Users
+            = link_to "Start Tour", "javascript:void(0);", onclick: "javascript:introJs().start();" , :class=> "submenu-icon-milestone"
+
+  .seven.columns.feed-container#no-gutter
+    .big-left-margin
+      %h3 Listing users
+
+      %table
+        %thead
+          %tr
+            %th Name
+            %th Email
+            %th      
+
+        - @users.each do |user|
+          %tr
+            %td= user.name
+            %td= user.email
+            %td= link_to 'Profile', user
+
+      %br
+      = will_paginate @users

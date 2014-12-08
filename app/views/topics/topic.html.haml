@@ -1,0 +1,43 @@
+.row
+  .three.columns
+    .row
+      .twelve.columns
+        .fixme{"gumby-fixed" =>"top"}
+          .big-padding-box.submenu
+            = link_to  "/topics/#{@name}/new" do
+              %i.fa.fa-fw.fa-lg.fa-newspaper-o
+              &nbsp;&nbsp;Newest Questions
+            = link_to "/topics/#{@name}" do
+              %i.fa.fa-fw.fa-lg.fa-certificate
+              &nbsp;&nbsp;Top Questions
+            = link_to "/topics/#{@name}/unanswered" do
+              %i.fa.fa-fw.fa-lg.fa-question
+              &nbsp;&nbsp;Unanswered Questions
+            = link_to "/topics/#{@name}/all" do
+              %i.fa.fa-fw.fa-lg.fa-user
+              &nbsp;&nbsp;All Questions
+  .nine.columns.feed-container#no-gutter
+    .padding-box
+      .row
+        .eight.columns
+          .row.topic-header
+            .ten.columns
+              %h3
+                = @name.capitalize
+            .two.columns
+              .row{:title=>'Number of Questions tagged'}
+                %h5
+                  %i.fa.fa-tag
+                  %span
+                    = @question_count
+          .row
+            .twelve.columns
+              - if @questions.length == 0
+                %h3.grey.centered-text.large-top-margin
+                  No Questions Yet. Add some questions.
+              = render partial: "topics/topic_each_question", collection: @questions, as: :question
+
+              = will_paginate(@questions)
+        / Right section here
+        .four.columns.right-section
+          = render partial: 'topics/right_sec'

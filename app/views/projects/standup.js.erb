@@ -1,0 +1,6 @@
+$(".active").removeClass("active");
+$("#tasks-link").addClass("active");
+$(".overview_content").hide();
+$(".main_content").html("");
+$(".main_content").show();
+$('.main_content').html('<%= escape_javascript(render partial: "standup") %>');

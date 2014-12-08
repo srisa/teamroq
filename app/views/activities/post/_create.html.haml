@@ -1,0 +1,29 @@
+.wrapper-box
+  .row
+    .one.column
+      = image_tag activity.user.profile_picture.url(:small), :class=>"middle-image"
+    .eleven.columns
+      %p.post-name
+        %span.label.info
+          POST
+        = link_to activity.user.name , activity.user, :class=>'post-user-name'
+        has created a post to group:
+        = link_to activity.trackable.postable.name , activity.trackable.postable
+        %small.item-time-ago
+          = time_ago_in_words activity.updated_at
+          ago
+.wrapper-box  
+  .row
+    .eleven.columns.push_one  
+      %p.concise-text
+        = activity.trackable.content.truncate(TRIM_LENGTH_BIG, separator: ' ')
+.row
+  .eleven.columns.push_one
+    .bottom-item-bar
+      .row
+        .eight.columns
+          .item-wrapper
+            = link_to raw("<i class='fa fa-comment'></i>#{pluralize(activity.trackable.comments.count,'Comment')}"),"/posts/#{activity.trackable.id}/activitycomments/#{activity.id}" , :class => "show-comment-btn", :id=> "show-comment-activity#{activity.id}", :remote => true
+        .row
+          .twelve.columns
+            .comment-section{:id => "comment-section-activity#{activity.id}"}

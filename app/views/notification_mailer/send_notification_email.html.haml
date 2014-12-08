@@ -1,0 +1,27 @@
+%p
+  =@activity.user.name
+  has 
+  - if @activity.action.downcase != 'comment'
+    - if @activity.action.downcase == 'reopen'
+      = @activity.action.downcase+'ed'
+    - elsif @activity.action.downcase == 'user'
+      assigned you
+    - elsif @activity.action.downcase == 'date'
+      changed the date of
+    - else
+      = @activity.action.downcase+'d'
+    the 
+    - if @activity.trackable_type == 'Todo'
+      task
+      %a{href: "http://teamroq.com/todo_lists/#{@activity.affected_id}/todos/#{@activity.trackable_id}"}
+        = @activity.trackable_name
+    - else
+      = @activity.trackable_type.downcase
+      on
+      = @activity.affected_type.downcase
+      %a{href: "http://teamroq.com#{@activity.path}"}
+        = @activity.affected_name
+  - else
+    commented on
+    %a{href: "http://teamroq.com#{@activity.path}"}
+      = @activity.trackable_name

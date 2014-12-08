@@ -1,0 +1,27 @@
+#add-doc-modal.modal
+  .content
+    %a.close.switch{"gumby-trigger" => "|#add-doc-modal"}
+      %i.icon-cancel
+    .row
+      .ten.columns.centered
+        = form_for [@attachable, @document], :html=>{:multipart =>true} do |f|
+          - if @document.errors.any?
+            #error_explanation
+              %h5= "#{pluralize(@document.errors.count, "error")} prohibited this document from being saved:"
+              %ul
+                - @document.errors.full_messages.each do |msg|
+                  %li= msg
+          %fieldset
+            %legend
+              %h5
+                Upload a Document
+            .field
+              = f.text_field :name, :class=> "input", :placeholder => "Label for the file"
+
+            = f.fields_for :document_versions , DocumentVersion.new do |ff|
+              .field
+                = ff.file_field :file
+              .field
+                = ff.text_field :release_note, :class=>"input",:placeholder => "Add a Release note"
+            .medium.primary.metro.btn.rounded
+              = f.submit "Add Document"

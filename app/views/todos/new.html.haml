@@ -1,0 +1,44 @@
+.row
+  .three.columns
+    .row
+      .twelve.columns
+        .fixme{"gumby-fixed" =>"top"}
+          .big-padding-box.submenu
+            %h5
+              FILTERS
+            = link_to "/tasks" , :class=> "active" do
+              %i.fa.fa-w.fa-lg.fa-bullseye
+              Assigned to me
+            = link_to "/tasks/created"  do
+              %i.fa.fa-w.fa-lg.fa-user
+              Created by me
+            = link_to "/tasks/closed" do
+              %i.fa.fa-w.fa-lg.fa-check-circle-o
+              Closed by me
+            %hr
+            %small
+              %a{href: "/todos/new"}
+                %i.fa.fa-plus-square
+                ADD TASK 
+  .nine.columns#no-gutter
+    .row
+      - unless @todo_lists.blank?
+
+        .eight.columns.centered
+          = render 'form'
+      - else
+        .twelve.columns.centered-text
+          %h4
+            You dont seem to have a task list created.You need to create a task list first before creating a task.
+          %p
+            If you have created a project, you can go to your 
+            %a{href: "/projects"}
+              projects
+            , select the project
+            and create a task list.
+          %p
+            If you have not created a project, you can create one 
+            %a{href: "projects/new"}
+              here
+
+

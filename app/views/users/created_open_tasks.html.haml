@@ -1,0 +1,39 @@
+.row
+  .three.columns
+    .row
+      .twelve.columns
+        .fixme{"gumby-fixed" =>"top"}
+          .big-padding-box.submenu
+            %h5
+              FILTERS
+            = link_to "/tasks" do
+              %i.fa.fa-w.fa-lg.fa-bullseye
+              Assigned to me
+            = link_to "/tasks/created"  , :class=> "active"  do
+              %i.fa.fa-w.fa-lg.fa-user
+              Created by me
+            = link_to "/tasks/closed" do
+              %i.fa.fa-w.fa-lg.fa-check-circle-o
+              Closed by me
+            %hr
+            %small
+              %a{href: "/todos/new"}
+                %i.fa.fa-plus-square
+                ADD TASK 
+  .nine.columns
+    .row.medium-top-margin
+      .four.columns.push_eight
+        %span.pull-right.medium.metro.rounded.btn.primary
+          = link_to "Closed Tasks " , '/tasks/created/closed', :class=> "weighted"
+    .medium-top-margin
+    - @todos.each_slice(3) do |slice|
+      .row.left-margin
+        - slice.each do |todo|
+          .four.columns
+            = render "common/todo" , :todo => todo
+      
+    - unless @todos.presence
+      .row
+        .twelve.columns.medium-top-margin
+          %h4.grey.centered-text.medium-top-margin
+            No open tasks created by you yet.For tasks created by you and are closed click on archived tasks button above.

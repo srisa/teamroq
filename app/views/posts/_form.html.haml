@@ -1,0 +1,19 @@
+= form_for [@postable,@post] , :html=>{:multipart=>true} do |f|
+  - if @post.errors.any?
+    #error_explanation
+      %h5= "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
+      %ul
+        - @post.errors.full_messages.each do |msg|
+          %li= msg
+
+  %fieldset
+    %legend
+      - if action_name == "edit"
+        Amend a Post
+      - else
+        Create a Post    
+    .field
+      = f.text_area :content, :rows=>6, :cols => 80,:class=>'input textarea inputboxforUserSearch',:placeholder =>'Your post'
+
+    .medium.rounded.primary.metro.btn
+      = f.submit 'Add Post' ,:class=>'weighted'

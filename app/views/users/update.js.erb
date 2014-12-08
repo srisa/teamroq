@@ -1,0 +1,7 @@
+$('.main-profile-section')
+.html('<%= escape_javascript(render partial: "basic_details", locals: {user: @user, points: @points}) %>');
+$(".edit-profile-form").hide();
+$(".edit-profile-btn").on("click",function() {
+      $(".edit-profile-form").show();
+      $(window).scrollTop($(".edit-profile-form").offset().top);
+    });

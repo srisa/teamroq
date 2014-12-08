@@ -1,0 +1,58 @@
+.navbar#navbar1
+  .row
+    .two.columns.logo
+      %a(href="/")
+        teamroq
+    %a.toggle{"gumby-trigger" => "#navbar1 > .row > ul", href: "#"}
+      %i.fa.fa-bars
+    - if user_signed_in?  
+      %ul.ten.columns
+        %li.field
+          %input.xxwide.input.search.search-query{:type => "text", :placeholder => "Search Users,Topics,Questions,Teams, Projects", "data-step" => "7", "data-intro" => "Most powerful search bar to search anything. Start typing and you will see appropriate suggestions"}
+        %li#placeHolder
+          #notification-container{"data-no-turbolink" => ""}
+            %a{:href => "#", "data-step" => "8", "data-intro" => "Check all the notifications here"}
+              %i.fa.fa-bell-o.fa-lg
+            .notification-bubble
+        %li
+          %a{:href => "#"}
+            = image_tag current_user.profile_picture.url(:little),:class => "header-user-photo"
+            = current_user.name
+          .dropdown
+            %ul
+              %li
+                = link_to "Profile", current_user
+              / %li
+              /   = link_to "Change Password", edit_user_registration_path  
+              %li
+                = link_to "Logout", destroy_user_session_path, :method => 'delete'
+    - else
+      %ul.six.columns.push_seven
+        %li
+          = link_to "LOGIN", new_user_session_path, :class=> "weighted"
+- if user_signed_in?
+  .navbar#secnavbar
+    .row
+      %ul.twelve.columns
+        %li
+          %a.weighted#header-projects{ :href => "/projects"}
+            %i.fa.fa-briefcase
+            PROJECTS
+        %li
+          %a.weighted#header-tasks{ :href => "/tasks"}
+            %i.fa.fa-tasks
+            TASKS
+            .label.danger
+              = @current_user.todos.by_open.count
+        %li
+          %a.weighted#header-groups{ :href => "/groups"}
+            %i.fa.fa-group
+            GROUPS
+        %li
+          %a.weighted#header-documents{ :href => "/documents"}
+            %i.fa.fa-file
+            DOCUMENTS
+        %li
+          %a.weighted#header-topics{ :href => "/questions"}
+            %i.fa.fa-tags
+            TOPICS

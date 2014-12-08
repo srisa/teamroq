@@ -1,0 +1,5 @@
+- flash.each do |name, message|
+  .alert.a-closing-alert.small-top-margin{:class => "alert #{name}", :id => "alert"}
+    %a.switch.close{"gumby-trigger" => "#alert", href: "#"}
+      %i.fa.fa-close
+    = message

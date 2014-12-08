@@ -1,0 +1,20 @@
+#update-doc-modal.modal
+  .content
+    %a.close.switch{"gumby-trigger" => "|#update-doc-modal"}
+      %i.fa.fa-close
+    .row
+      .ten.columns.centered
+        = form_for [@attachable,@document, DocumentVersion.new], :html=> {:multipart =>true} do |f|
+          - if @document.errors.any?
+            .alert
+              There are errors. check them.
+          %fieldset
+            %legend
+              %h4
+                Update the document
+            .field
+              = f.file_field :file
+            .field
+              = f.text_field :release_note, :class=>"input",:placeholder => "Add a Release note"
+            .medium.btn.metro.danger.pull-right.rounded
+              = f.submit "Update"

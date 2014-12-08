@@ -1,0 +1,51 @@
+%br
+.tab-content
+  .tab-pane.active#tab1
+  - @askable.questions.each do |question|
+    %ul.unstyled
+      %li
+        %p
+          %small
+            =link_to question.user_name , question.user
+            added a  
+            =link_to "Question", question
+            = time_ago_in_words question.created_at
+            ago
+        %p
+          = question.title    
+        %p
+          .showmore-showless
+            = question.content
+      %ul.inline
+        %li
+          %span.badge.badge-inverse
+            = link_to raw('<i class="icon-arrow-up"></i>'), vote_question_path(question, type: "up"), method: "post"
+            = question.votes
+            = link_to raw('<i class="icon-arrow-down"></i>'), vote_question_path(question, type: "down"), method: "post"
+        %li
+          %small
+            =link_to question.answers.count.to_s + " Answers", question_answers_path(question)
+        %li
+          %small
+            =link_to "Answer" , new_question_answer_path(question) 
+        %li
+          %small
+            =link_to "Comment" ,"#"
+      %hr
+%br
+= form_for [@askable, Question.new] do |f|
+  %fieldset
+    %h6= "Which Topic this question falls into?"
+    
+    = f.text_field :topic_list,:class=>"tagsinput"
+    = f.text_field :title, :placeholder => "Question title here!"
+    = f.text_area :content, :rows=>3, :cols => 80,:class=>'inputboxforUserSearch',:placeholder =>'Describe your question here!'
+    = f.hidden_field :askable_id, :value => @askable.id
+    = f.hidden_field :user_id, :value => current_user.id
+    = f.hidden_field :askable_type, :value => @askable.class.name
+    
+  .actions
+    = f.submit 'Add Question' , :class => 'btn btn-primary pull-left btn-large'
+
+
+

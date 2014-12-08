@@ -1,0 +1,23 @@
+.row.border-bottom.small-top-margin
+  .two.columns
+    %ul
+      %li
+        - if question.votes
+          %h3.centered-text
+            = question.votes 
+        - else
+          %h3.centered-text
+            0
+      %li.centered-text
+        %a{href: "/questions/#{question.to_param}"}
+          = question.answers.size
+          Answers
+  .ten.columns
+    .row
+      .twelve.columns
+        %h5.grey-header
+          = link_to question.title, question, :class => 'grey-header'
+    .row
+      .twelve.columns
+        = question.content
+      

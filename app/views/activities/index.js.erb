@@ -1,0 +1,5 @@
+// alert("js file called");
+$('.activity-list').append('<%= j render partial: "activity_list", collection: @activities, as: :activity %>');
+<% if !@more_results %>
+	$('.activity-results').remove();
+<% end %>

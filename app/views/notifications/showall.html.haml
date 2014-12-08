@@ -1,0 +1,25 @@
+.big-left-margin
+  .row.small-margin-top.user-name-box
+    .eight.columns
+      .row
+        .ten.columns
+          %h4 Notifications
+
+      .row
+        - if @activities_array[0].presence
+          .twelve.columns.activity_group
+            %h5 Activities today
+          .twelve.columns.activity_list
+            = render partial: 'scoped_activities', collection: @activities_array[0], as: :activity
+      .row
+        - if @activities_array[1].presence
+          .twelve.columns.activity_group
+            %h5 Activities this week
+          .twelve.columns.activity_list
+            = render partial: 'scoped_activities', collection: @activities_array[1], as: :activity
+      .row
+        - if @activities_array[2].presence
+          .twelve.columns.activity_group
+            %h5 Activities before this week
+          .twelve.columns.activity_list
+            = render partial: 'scoped_activities', collection: @activities_array[2], as: :activity

@@ -1,0 +1,21 @@
+%h1 Listing group_roles
+
+%table
+  %tr
+    %th Group
+    %th User
+    %th
+    %th
+    %th
+
+  - @group_roles.each do |group_role|
+    %tr
+      %td= group_role.group
+      %td= group_role.user
+      %td= link_to 'Show', group_role
+      %td= link_to 'Edit', edit_group_role_path(group_role)
+      %td= link_to 'Destroy', group_role, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Group role', new_group_role_path

@@ -1,0 +1,96 @@
+@import "var/settings";
+
+.modal.active{
+  z-index: 2;
+}
+
+.ui-datepicker{ z-index: 9999 !important;}
+
+.standup-content-box{
+  overflow: hidden;
+  height: 210px;
+}
+
+.subnav-bar{
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+
+.top-menu-item{
+  display: inline-block;
+}
+
+.modal.active{
+  z-index: 2;
+}
+
+.add-users-tagsinput{
+  height: auto;
+  min-height: 60px;
+}
+
+.standup-scroll-box{
+  position: relative;
+}
+
+.tasklist-scroll-box{
+  position:relative;
+}
+
+.doc-image{
+  vertical-align: text-top;
+  float: left;  
+  padding-right: 10px;
+}
+
+.doc-image-text{
+  margin-left: 10px;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.doc-title{
+  font-size: 1.2em;
+  font-weight: 600;
+  color: $peter-river;
+}
+
+#user_list_tag{
+  min-width: 400px;
+  font-size: 1rem;
+  font-family: "Open Sans";
+  font-weight: 300;
+}
+
+.ptg-comp{
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.big-icon{
+  font-size: 1.1em;
+}
+
+.bigger-icon{
+  font-size: 1.3em;
+}
+
+.project-tick-box{
+  visibility: hidden;
+}
+
+.project-whole-box{
+   &:hover{
+    .project-tick-box{
+      visibility:visible;
+    }
+  }
+
+}
+
+
+
+
+
+

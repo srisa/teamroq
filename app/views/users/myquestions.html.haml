@@ -1,0 +1,52 @@
+.row
+  .three.columns
+    .row
+      .twelve.columns
+        .fixme{"gumby-fixed" =>"top"}
+          .big-padding-box.submenu
+            = link_to "Topics", "/questions" , :class=> "submenu-icon-dashboard"
+            %hr
+            %h5
+              QUESTIONS
+            - if @test > 0
+              = link_to "Created by me", "/myquestions/created" , :class=> "submenu-icon-users"
+              = link_to "Followed by me", "/myquestions/following" , :class=> "submenu-icon-milestone active"  
+            - else
+              = link_to "Created by me", "/myquestions/created" , :class=> "submenu-icon-users active"
+              = link_to "Followed by me", "/myquestions/following" , :class=> "submenu-icon-milestone"  
+            %hr
+            = link_to "Ask a Question", new_question_path , :class=> "weighted"  
+  .nine.columns
+    .row
+      .eight.columns
+        %h5
+          Your Questions
+    .medium-top-margin
+    - if @questions.blank?
+      .row
+        .twelve.columns.medium-top-margin
+          %h4.grey.centered-text.medium-top-margin
+            No questions yet! Ask question by clicking 'Ask Question' button on top.
+
+    -@questions.each_slice(3) do |slice|
+      .row
+        - slice.each do |q|
+          .four.columns
+            .todo-box
+              .todo-header-box
+                %b
+                  = link_to q.title, question_path(q)
+              .todo-content-box    
+                %span.concise-text
+                  = truncate(q.content, :length => 100)
+              .todo-footer-box
+                %li.medium.info.label.small-top-margin
+                  = q.answers.size
+                  Answer
+                %li.medium.info.label.small-top-margin
+                  = q.rating.to_i
+                  Votes
+
+
+    
+

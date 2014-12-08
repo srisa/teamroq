@@ -1,0 +1,79 @@
+.row
+  .three.columns.big-padding-box.submenu
+    - if @attachable.is_a? Project
+      = link_to @attachable  do
+        %i.fa.fa-fw.fa-lg.fa-newspaper-o
+        &nbsp;&nbsp;Dashboard
+      = link_to users_project_path(@attachable) do
+        %i.fa.fa-fw.fa-lg.fa-user
+        &nbsp;&nbsp;Users
+      = link_to "/projects/#{@attachable.to_param}/discussions"  do
+        %i.fa.fa-fw.fa-lg.fa-send-o
+        &nbsp;&nbsp;Discussions
+      = link_to standup_project_path(@attachable), :class=> "active" do
+        %i.fa.fa-fw.fa-lg.fa-coffee
+        &nbsp;&nbsp;Standup Meeting
+      = link_to "/projects/#{@attachable.to_param}/documents" do
+        %i.fa.fa-fw.fa-lg.fa-file-o
+        &nbsp;&nbsp;Documents
+      = link_to "/projects/#{@attachable.to_param}/charts"do
+        %i.fa.fa-fw.fa-lg.fa-line-chart
+        &nbsp;&nbsp;Charts
+    - elsif @attachable.is_a? Group
+      = link_to @attachable, :class=> " active"  do
+        %i.fa.fa-fw.fa-lg.fa-newspaper-o
+        &nbsp;&nbsp;Dashboard
+      = link_to users_group_path(@attachable) do
+        %i.fa.fa-fw.fa-lg.fa-user
+        &nbsp;&nbsp;Users
+      = link_to "/groups/#{@attachable.to_param}/announcements"  do
+        %i.fa.fa-fw.fa-lg.fa-bullhorn
+        &nbsp;&nbsp;Announcements
+      = link_to "/groups/#{@attachable.to_param}/documents"  do
+        %i.fa.fa-fw.fa-lg.fa-file-o
+        &nbsp;&nbsp;Documents  
+    %hr
+    %small
+      %a.add-user-btn.switch{"gumby-trigger" => "#update-doc-modal", href: "#"}
+        %i.fa.fa-plus-square
+        UPDATE DOCUMENT
+  .nine.columns.small-top-margin
+    .row
+      .nine.columns
+        %h4
+          = @document.name.titleize
+
+    %table
+      %thead
+        %tr
+          %td
+            Version
+          %td
+            Updated at
+          %td
+            Download
+          %td
+            Release Note
+      - @document.document_versions.each.with_index do |version, i|
+        %tr
+          %td
+            - if i == 0
+              %span
+                Current
+            - else
+              %span
+                v
+                = i
+          %td
+            = version.created_at.to_date.to_formatted_s(:short)
+          %td
+            - if @attachable.is_a? Project
+              = link_to project_document_document_version_download_path(@attachable,@document,version) , :class=>"weighted" do
+                %i.fa.fa-cloud-download
+            - elsif @attachable.is_a? Group
+              = link_to group_document_document_version_download_path(@attachable,@document,version) , :class=>"weighted" do
+                %i.fa.fa-cloud-download
+              
+          %td
+            = version.release_note
+  = render partial: "documents/document_update"

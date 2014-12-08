@@ -1,0 +1,330 @@
+#no-gutter{
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.mls{
+  margin-left: 1em;
+}
+
+.title{
+  font-weight: 700;
+}
+
+.small-image{
+  border-radius: 50%;
+}
+
+.large-text{
+  font-size: 1.2em;
+}
+
+.grey-header{
+  color: $submenu-font-color;
+}
+
+.task-list{
+  font-size: 1em;
+  border-bottom: 1px solid #FAFAFA;
+  padding-bottom: 0.5em;
+  margin-bottom: 0px;
+}
+
+.chk-box-list{
+  vertical-align: text-top;
+  margin-right: 0.5em;
+}
+
+.white-b-box{
+  background-color: $white;
+}
+
+.user-name-l{
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+
+
+.comment-section{
+  font-size: 0.9em;
+}
+
+.light-border-box{
+  border: 1px solid $border-color;
+  @include border-radius(4px);
+  background-color: $white;
+}
+
+.todo-box{
+  background-color: $white;
+  border: 1px solid $border-color;
+  padding: 1em;
+  border-radius: 4px;
+  margin-bottom: 2em;
+  &:hover{
+    .tick-box{
+      visibility:visible;
+    }
+  }
+}
+
+.full-height{
+  height: 100%;
+}
+
+.big-left-margin{
+  margin-left: $gutter-in-px;
+}
+
+.todo-header-box{
+  overflow: hidden;
+  margin-bottom: 0px;
+  line-height: 1.1em;
+  height: 16px;
+  a{
+    font-size: 1.1em;
+  }
+}
+.todo-name-box{
+  overflow: hidden;
+  line-height: 1.3em;
+}
+.todo-sub-header-box{
+ overflow: hidden;
+  height: 25px; 
+}
+
+.todo-list-header{
+  padding: 5px;
+  border: 1px solid #dddedf;
+  background-color: #f8f8f8;
+}
+
+.todo-content-box{
+  overflow: hidden;
+  height: 60px;
+  border-bottom: 1px solid $border-color;
+  margin-bottom: 5px;
+}
+
+.full{
+  background-color: #ffffff;
+
+}
+
+.time-ago-text{
+  width:40%;
+  overflow: hidden;
+  height: 1.3em;
+}
+
+.todo-footer-box{
+  overflow: hidden;
+  line-height: 1.3em;
+  }
+i.white{
+  color: $navbar-link-color;
+}
+i.black{
+  color: $navbar-color;
+}
+
+b{
+  font-weight: 800;
+}
+
+.well{
+  background-color: $light-grey;
+  border-left: 3px solid $primary-color;
+  padding-left: 10px;
+}
+
+
+.tiny-image{
+ height: 13px;
+  vertical-align: middle; 
+}
+
+.concise-text{
+  line-height: 1.4em;
+  // text-align: justify;
+  padding-right: 1em;
+  word-wrap: break-word;
+}
+
+.todo-concise-text{
+  line-height: 1.4em;
+  margin-bottom: 0px;
+}
+
+.grey{
+  color: #bbbbbb;
+}
+
+.hero{
+  font-weight: 600;
+  font-size:5\30px;
+}
+
+i.large{
+  font-size: 25px;
+}
+
+.no-margin{
+  margin: 0px;
+}
+
+.no-margin-no-b{
+    margin: 0px;
+}
+
+.small-top-margin{
+  margin-top: 0.5em;
+}
+
+.small-bottom-margin{
+  margin-bottom: 0.5em;
+}
+
+.medium-top-margin{
+  margin-top: 2em;
+}
+
+.medium-bottom-margin{
+  margin-bottom: 2em;
+}
+
+.large-top-margin{
+  margin-top: 4em;
+}
+
+
+.centered-text{
+ text-align: center; 
+}
+
+.small-font{
+  font-size: 0.8em;
+}
+
+.profile-box{
+  margin-bottom: 20px;
+  
+}
+.margin-right{
+  margin-right: 20px;
+}
+
+.background-box{
+  background-color: $white;
+  border: 1px solid $border-color; 
+  @include border-radius(4px);
+  padding-bottom: 5px;
+}
+
+
+.margin-box{
+  margin: 1em;
+}
+
+.padding-box{
+  padding: 1em;
+}
+.big-padding-box{
+  padding: 2em;
+}
+
+.left-margin{
+  margin-left: 1em;
+}
+
+.title-box{
+margin-bottom: 1px;
+font-size: 32px;
+line-height: 1em;
+text-align: center;
+font-weight: 600;
+color: #686565;
+}
+
+.group-title-box{
+margin-bottom: 1px;
+font-size: 22px;
+line-height: 1em;
+text-align: center;
+font-weight: 600;
+color: #686565;
+}
+
+
+.special-text-box{
+  text-align: center;
+  color: #a4a7ae;
+}
+
+.header-box{
+  text-align: center;
+  overflow:hidden;
+  height:34px;
+  a{
+    font-weight: 600;
+  }
+  font-weight: 600;
+}
+
+.content-box{
+  height: 65px;
+  overflow: hidden;
+  line-height: 1.5em;
+  color: #b5b8be;
+}
+
+.wrapper-border-box{
+  background-color: $white;
+  @include box-shadow(0 0 3px #c9c9c9); 
+  @include border-radius(4px);
+}
+
+.center{
+  text-align: center;
+}
+
+.weighted{
+ // font-weight: 600;
+}
+
+.ui-autocomplete-category {
+  font-family: "Lato";
+  font-weight: bold;
+  padding: .2em .4em;
+  margin: 0 0 .2em;
+  line-height: 1.5;
+  background-color: $primary-color;
+  color: #fff;
+  font-size: 16px;
+  text-transform:capitalize;
+}
+
+.big-font{
+  font-size: 1.2em;
+}
+
+.small-top-padding{
+  padding-top: 1em;
+}
+
+.strong{
+  font-weight: 600;
+}
+
+.loading-image-holder{
+  width: 100%;
+  text-align: center;
+  padding-bottom: 1em;
+}
+
+.file-image{
+  padding-right: 0.2em !important;
+  float: left;
+}

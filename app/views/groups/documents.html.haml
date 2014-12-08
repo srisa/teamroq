@@ -1,0 +1,51 @@
+.row
+  .three.columns.big-padding-box.submenu
+    = link_to @group  do
+      %i.fa.fa-fw.fa-lg.fa-newspaper-o
+      &nbsp;&nbsp;Dashboard
+    = link_to users_group_path(@group) do
+      %i.fa.fa-fw.fa-lg.fa-user
+      &nbsp;&nbsp;Users
+    = link_to "/groups/#{@group.to_param}/announcements"  do
+      %i.fa.fa-fw.fa-lg.fa-bullhorn
+      &nbsp;&nbsp;Announcements
+    = link_to "/groups/#{@group.to_param}/documents" , :class=> " active" do
+      %i.fa.fa-fw.fa-lg.fa-file-o
+      &nbsp;&nbsp;Documents  
+    %hr    
+    %small
+      %a.add-user-btn.switch{"gumby-trigger" => "#add-doc-modal", href: "#"}
+        %i.fa.fa-plus-square
+        ADD DOCUMENT
+    %hr
+    %h6
+      FILTERS
+    = link_to "/groups/#{@group.to_param}/documents/filter/today" , :class=> "filter-link" do
+      %i.fa.fa-w.fa-bolt
+      UPDATED TODAY
+    = link_to "/groups/#{@group.to_param}/documents/filter/popular" , :class=> "filter-link" do
+      %i.fa.fa-w.fa-star
+      MOST POPULAR
+    = link_to "/groups/#{@group.to_param}/documents/filter/byme" , :class=> "filter-link" do
+      %i.fa.fa-w.fa-user
+      ADDED BY ME
+  .nine.columns  
+    %h4
+      Documents
+    - @documents.each_slice(3) do |slice|
+      .row
+        - slice.each do |document|
+          .four.columns.medium-top-margin
+            = render partial: "documents/document_type", locals: {document: document}
+            %span.doc-image-text
+              = link_to truncate(document.name.titleize,length: 20), download_group_document_path(@group, document), :class=>"doc-title"
+            %span.doc-image-text  
+              = document.document_versions.count
+              |
+              = link_to "Previous Versions", [@group, document]
+    .medium-top-margin
+      = will_paginate(@documents)
+       
+  = render partial: "documents/document_partial"
+
+

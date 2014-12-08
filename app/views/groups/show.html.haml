@@ -1,0 +1,59 @@
+.row
+  .three.columns.big-padding-box.submenu
+    = link_to @group, :class=> " active"  do
+      %i.fa.fa-fw.fa-lg.fa-newspaper-o
+      &nbsp;&nbsp;Dashboard
+    = link_to users_group_path(@group) do
+      %i.fa.fa-fw.fa-lg.fa-user
+      &nbsp;&nbsp;Users
+    = link_to "/groups/#{@group.to_param}/announcements"  do
+      %i.fa.fa-fw.fa-lg.fa-bullhorn
+      &nbsp;&nbsp;Announcements
+    = link_to "/groups/#{@group.to_param}/documents"  do
+      %i.fa.fa-fw.fa-lg.fa-file-o
+      &nbsp;&nbsp;Documents  
+    %hr
+    %small
+      %a.add-user-btn.switch{"gumby-trigger" => "#add-user-modal", href: "#"}
+        %i.fa.fa-plus-square
+        ADD USER
+  .nine.columns
+    .row
+      .eight.columns
+        %h3
+          = @group.name
+        .wrapper-box  
+          %p.concise-text
+            = @group.description
+    .row
+      .nine.columns.field
+        = render partial: "posts/postable_partial" 
+    .row
+      .nine.columns
+        %ul
+          - @posts.each do|post|
+            %li.post-item
+              .wrapper-box
+                = image_tag post.user.profile_picture.url(:small), :class=>"middle-image"
+                %p.post-name
+                  = link_to post.user.name , post.user, :class=>'post-user-name'
+                  %small.item-time-ago
+                    = time_ago_in_words post.created_at
+                    ago
+              .wrapper-box
+                .row
+                  .eleven.columns.push_one
+                    %p.concise-text
+                      = post.content
+              .row
+                .eleven.columns.push_one
+                  .bottom-item-bar
+                    .row
+                      .eight.columns
+                        .item-wrapper
+                          = link_to raw("<i class='fa fa-comment'></i>#{pluralize(post.comments.count,'Comment')}"), post_comments_path(post), :class => "show-comment-btn", :id=> "show-comment-btn-post#{post.id}", :remote => true
+                    .row
+                      .twelve.columns
+                        .comment-section{:id => "comment-section-post#{post.id}"} 
+
+  = render partial: 'add_user_form'

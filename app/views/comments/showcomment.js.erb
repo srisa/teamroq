@@ -1,0 +1,11 @@
+var commentsection = $("#<%=@comment_section_id%>");
+commentsection.html('<%= escape_javascript(render partial: "comments/comment_list", collection: @comments, as: :comment)%>');
+commentsection.slideDown();
+var commentlink = $("a#<%=@show_comment_link_id%>");
+commentlink.attr("href", "#");
+commentlink.removeAttr("data-remote");
+
+$(".comment-button").click(function(e) {
+  e.preventDefault();
+  return $(this).parent().parent().next(".commentlist").toggle();
+});

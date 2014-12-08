@@ -1,0 +1,42 @@
+.row
+  .three.columns.big-padding-box.submenu
+    = link_to @project  do
+      %i.fa.fa-fw.fa-lg.fa-newspaper-o
+      &nbsp;&nbsp;Dashboard
+    = link_to users_project_path(@project) do
+      %i.fa.fa-fw.fa-lg.fa-user
+      &nbsp;&nbsp;Users
+    = link_to "/projects/#{@project.to_param}/discussions"  do
+      %i.fa.fa-fw.fa-lg.fa-send-o
+      &nbsp;&nbsp;Discussions
+    = link_to standup_project_path(@project) do
+      %i.fa.fa-fw.fa-lg.fa-coffee
+      &nbsp;&nbsp;Standup Meeting
+    = link_to "/projects/#{@project.to_param}/documents" do
+      %i.fa.fa-fw.fa-lg.fa-file-o
+      &nbsp;&nbsp;Documents
+    = link_to "/projects/#{@project.to_param}/charts" , :class=> "active" do
+      %i.fa.fa-fw.fa-lg.fa-line-chart
+      &nbsp;&nbsp;Charts
+    %hr
+  .nine.columns
+    .row
+      .twelve.columns
+        .charts
+          = line_chart [{name: "Total Tasks", data: @line_chart_series1},{name: "Closed Tasks", data: @line_chart_series2},{name: "Delayed Tasks", data: @line_chart_series3}], :id => "chart1", :library => {:title => "Project Performance",:curveType => 'none',:vAxis => {:title=> 'Number of Tasks'}}
+    .row
+      .six.columns
+        .charts
+          = pie_chart @data1, :id => "chart2", :library => {:title => "Delayed Tasks", :pieHole => 0.4}
+      .six.columns
+        .charts
+          = pie_chart @data2, :id => "chart3", :library => {:title => "Open, Delayed and Closed tasks",:pieHole => 0.4}
+    .row
+      .six.columns
+        .charts
+          = pie_chart @delayed_users, :id => "chart4", :library => {:title => "Delayed Tasks By Users",:pieHole => 0.4}
+
+      
+
+
+      

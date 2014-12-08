@@ -1,0 +1,10 @@
+.row.small-top-margin
+  .six.columns.follow_unfollow
+    = render partial: "follow_unfollow"
+  .six.columns.followers_count{:title => 'Number of Followers'}
+    = link_to pluralize(@followers_count, 'Follower'), '#', :class=> 'followers-number'
+        
+.row.medium-top-margin
+  .twelve.columns
+    .medium.secondary.rounded.metro.skiplink.btn
+      %a.weighted{"gumby-goto" => "[data-target='answer-question']"} Answer

@@ -1,0 +1,46 @@
+.left-margin
+  .row.medium-padding-exclude-top
+    .twelve.columns
+      .row
+        .five.columns.follow_unfollow
+          = render partial: "topics/follow_unfollow"
+        .seven.columns.followers_count{:title => 'Number of Followers'}
+          = link_to pluralize(@followers_count, 'Follower'), '#', :class=> 'followers-number'
+  .row.medium-top-margin
+    .twelve.columns
+      .medium.secondary.btn.metro.rounded
+        %a.weighted{href: "/questions/new?topic=#{@name}"} Ask Question
+  -unless @leaders.blank?
+    .row.medium-padding-exclude-top.small-margin-top
+      .row
+        .twelve.columns
+          .row{:title => "Top few experts of this topic along with their expertise level"}
+            .two.columns
+              =image_tag "leaderboard-header.png"
+            .six.columns
+              %h5 
+                Leader Board
+          .row
+            .twelve.columns
+              %ul
+                - @leaders.each do |leader|
+                  %li.border-bottom
+                    .row
+                      .two.columns.image.rounded{style: "margin: 5px;"}
+                        = image_tag leader[:photo]
+                      .eight.columns
+                        = link_to leader[:name], user_path(leader[:id])
+                    .row
+                      .ten.columns.push_two
+                        %span.leader-attr{:title => "Points scored in this topic"}
+                          = leader[:score]
+                        %span.leader-attr{:title => "Expertise in this topic"}
+                          = leader[:badge]
+
+        %ul
+          - @topics.each do |t|
+            %li.small-top-margin
+              .medium.info.btn.metro.rounded
+                =link_to t[:name].upcase, tag_path(t[:name]), :class=> 'weighted'
+              %span.no-of-tags-related x 
+              = t[:tagcount]

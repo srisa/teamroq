@@ -1,0 +1,6 @@
+- unless current_user.follows_topic?(@topic)
+  .medium.success.btn.metro.rounded
+    =link_to "Follow", "/topics/#{@name}/follow", :method =>'patch', :remote=> :true, :class=> "weighted follow-topic"
+- else
+  .medium.warning.btn.metro.rounded
+    =link_to "Unfollow", "/topics/#{@name}/unfollow", :method =>'patch', :remote=> :true, :class=> "weighted unfollow-topic"

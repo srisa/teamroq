@@ -1,0 +1,25 @@
+.row
+  .three.columns
+    .row
+      .twelve.columns
+        .fixme{"gumby-fixed" =>"top"}
+          .big-padding-box.submenu
+            = link_to  "/" do
+              %i.fa.fa-fw.fa-lg.fa-newspaper-o
+              &nbsp;&nbsp;Dashboard
+            = link_to "/users" do
+              %i.fa.fa-fw.fa-lg.fa-user
+              &nbsp;&nbsp;Users
+  .seven.columns.feed-container#no-gutter
+    - unless @activities.presence
+      %h3.grey.centered-text.large-top-margin
+        Nothing to show in feed
+
+    .row
+      %ul.activity-list.left-margin
+        = render :partial => "activity_list", collection: @activities, as: :activity
+    .activity-results
+    - if @activities.presence && @activities.size >=8
+      .loading-image-holder
+        = image_tag("ajax-loader.gif", :align => "middle")
+  

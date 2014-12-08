@@ -1,0 +1,48 @@
+.submenu{
+  min-height: 100%;
+  background-color: $white;
+  border-right: 1px solid $border-color;
+  h6{
+    color: $submenu-header-color;
+    font-weight: 700;
+    font-size: 1em;   
+  }
+
+  a{
+    display: block;
+    font-weight: 400;
+    font-size: 1.2em;
+    background-position: 20px center;
+    color: $submenu-font-color;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-repeat: no-repeat;
+    padding-left: 25px;
+
+    &:hover, &.active{
+    background-color: $primary-color;
+    color: $white;
+    }
+    
+  }
+
+  .filter-link{
+    font-size: 0.9em;
+    font-weight: 400;
+    &:hover, &:active {
+      background-color: $white;
+      font-weight: 700;
+      color: $submenu-font-color;
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+

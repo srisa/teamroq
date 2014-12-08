@@ -1,0 +1,24 @@
+.row.answersection
+  .two.columns.center-align-text
+    = render partial: 'votes/vote', locals: {votable: answer}
+    .check-mark-section{:id => "check-mark-answer#{answer.id}"}
+      = render partial: 'answers/mark_answer', locals: {answer: answer}
+     
+  .ten.columns
+    .row
+      .twelve.columns.answer-box
+        %p
+          = raw answer.content
+    .row
+      .seven.columns.tenpercentmargintop
+        = link_to "#{answer.comments.size} Comments", answer_comments_path(answer), :class => "show-comment-btn", :id=> "show-comment-btn-answer#{answer.id}", :remote => true
+      .five.columns
+        .row.posttime.small-font
+          Answered 
+          = time_ago_in_words answer.created_at
+          ago
+        = render partial: "questions/user_signature", locals: {user: answer.user}
+    .row.small-top-margin
+    .row.comment-section{:id => "comment-section-answer#{answer.id}"} 
+
+        

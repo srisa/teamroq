@@ -1,0 +1,23 @@
+.row.big-left-margin
+  .nine.columns
+    %h4
+      Documents you have uploaded
+    - @documents.each_slice(3) do |slice|
+      .row
+        - slice.each do |document|
+          .four.columns.medium-top-margin
+            = render partial: "documents/document_type", locals: {document: document}
+            %span.doc-image-text
+              = link_to truncate(document.name.titleize,length: 20), [:download, document.attachable,document], :class=>"doc-title"
+            %span.doc-image-text  
+              = document.document_versions.count
+              |
+              = link_to "Previous Versions", [document.attachable, document]
+    - unless @documents.presence
+      .row
+        .eight.columns.centered
+          %h4.filler-text
+            You can upload documents in Projects or in groups.
+
+  .three.columns
+    = will_paginate @documents

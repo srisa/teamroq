@@ -1,0 +1,7 @@
+$('#show-comment-btn-<%=@commentable.class.name.downcase%><%=@commentable.id%>')
+.html("<i class='fa fa-comment'></i><%=pluralize(@commentable.comments.count,'Comment')%>");
+$('input#comment-box-<%=@commentable.class.name.downcase%><%=@commentable.id%>').val("");
+$('#comment-list-<%=@commentable.class.name.downcase%><%=@commentable.id%>').html('<%= escape_javascript(render partial: "comments/comment_list", 
+	collection: @commentable.comments.reverse, as: :comment) %>');
+$('#comment-list-<%=@commentable.class.name.downcase%><%=@commentable.id%>').show();
+
