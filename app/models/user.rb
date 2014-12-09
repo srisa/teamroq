@@ -28,7 +28,6 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :group_roles
   has_many :project_roles
   has_many :projects, :through => :project_roles
-  has_many :favorites
   has_many :points  
   has_many :todos
   has_many :badges , :through => :levels 
@@ -41,7 +40,6 @@ class User < ActiveRecord::Base
   
   self.per_page = 5
 
-
   def slug_candidates
     [
       :name,
@@ -49,24 +47,68 @@ class User < ActiveRecord::Base
     ]
   end
 
+  def notification_pointer
+    "/messages/#{self.id}/ncount"
+  end
+
+  def feed_key
+    "users:#{self.id}:feed"
+  end
+
+  def notification_key
+    "users:#{self.id}:notification"
+  end
+
+  def followers_key
+    "users:#{self.id}:followers"
+  end
+
+  def following_key
+    "users:#{self.id}:following"
+  end
+
+  def todos_following_key
+    "users:#{self.id}:todos"
+  end
+
+  def questions_following_key
+    "users:#{self.id}:questions"
+  end
+
+  def topics_following_key
+    "users:#{self.id}:topics"
+  end
+
+  def discussions_following_key
+    "users:#{self.id}:disucssions"
+  end
+
+  def topic_reputation_key name
+    "reputation:topic" + name
+  end
+
   def is_admin?
     self.has_role? :admin
   end
 
   def add_to_feed activity_id
-    if self.feed.include? activity_id
-      self.feed.delete activity_id
-    end
-    self.feed.unshift activity_id
-    self.feed_will_change!
+    $redis.zadd feed_key, Time.now.to_i, activity_id
   end
 
-  def add_to_notification activity_id
-    if self.notifications.include? activity_id
-      self.notifications.delete activity_id
-    end
-    self.notifications.unshift activity_id
-    self.notifications_will_change!
+  def add_to_notification activity_id 
+    $redis.zadd notification_key, Time.now.to_i, activity_id
+  end
+
+  def feed
+    $redis.zrevrange(feed_key, 0, 100)
+  end
+
+  def notifications
+    $redis.zrevrange(notification_key, 0, 100)
+  end
+
+  def followers
+    $redis.smembers following_key
   end
 
   class << self
@@ -77,6 +119,4 @@ class User < ActiveRecord::Base
     end
 
   end
-
-
 end

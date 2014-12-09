@@ -54,7 +54,6 @@ module JobsHelper
     @project_users.each do |user|
       @log.debug "feed items creation for user id #{user.id}"
       user.add_to_feed activity_id
-      user.save
     end
     todo_user_id = todo.user_id
     @activity_user = User.find(activity_user_id)
@@ -64,9 +63,7 @@ module JobsHelper
       #Notification not created on your own action
       if activity_user_id != user.id.to_i
         user.add_to_notification activity_id
-        user.save
-        notification_count_pointer = "/messages/" + user.id.to_s + "/ncount"
-        increase_notification_pointer(notification_count_pointer)
+        increase_notification_pointer(user.notification_pointer)
       end
     end
     
@@ -74,9 +71,7 @@ module JobsHelper
     unless activity_user_id == todo_user_id 
       unless todo.followers.include? todo_user_id
         todo.user.add_to_notification activity_id
-        todo.user.save
-        notification_count_pointer = "/messages/" + todo_user_id.to_s + "/ncount"
-        increase_notification_pointer(notification_count_pointer)
+        increase_notification_pointer(todo.user.notification_pointer)
       end
     end
 
@@ -89,16 +84,13 @@ module JobsHelper
     @log.debug "discussion_notify_util and project #{@project.name}"
     @project.users.each do |user|
       user.add_to_feed activity_id
-      user.save
     end
     
     followers = User.find(discussion.followers)
     followers.each do |user|
       unless user.id.to_i == activity_user_id
         user.add_to_notification activity_id
-        user.save
-        notification_count_pointer = "/messages/" + user.id.to_s + "/ncount"
-        increase_notification_pointer(notification_count_pointer)
+        increase_notification_pointer(user.notification_pointer)
       end
     end
     #even if creator of the discussion does not follow the discussion, he should be notified
@@ -106,7 +98,6 @@ module JobsHelper
       unless discussion.followers.include? discussion.user_id
         @log.debug "since owner doesnot follow so notification items creation for user id #{discussion_user_id}"
         discussion.user.add_to_notification activity_id
-        discussion.user.save
         notification_count_pointer = "/messages/" + discussion_user_id.to_s + "/ncount"
         increase_notification_pointer(notification_count_pointer)
       end

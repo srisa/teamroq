@@ -58,6 +58,14 @@ class Todo < ActiveRecord::Base
       transition :closed => :open
     end
   end
+
+  def followers_key
+    "todos:#{self.id}:followers"
+  end
+
+  def followers
+    $redis.smembers followers_key
+  end
   
   def add_watchers_to_todo user_list
     user_arr = user_list.split(',')
@@ -65,17 +73,15 @@ class Todo < ActiveRecord::Base
       user = User.find_by_name(u.strip)
       unless user.nil?
         unless self.followers.include? user.id
-          self.followers.push user.id
+          $redis.sadd followers_key, user.id
         end
       end
     end
-    self.followers_will_change!
   end 
 
 
   def add_owner owner_id
-    self.followers.push owner_id
-    self.followers_will_change!
+    $redis.sadd followers_key, owner_id
   end
  
 end

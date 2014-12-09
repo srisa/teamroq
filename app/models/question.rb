@@ -24,6 +24,26 @@ class Question < ActiveRecord::Base
   scope :with_no_answers, -> {where(answers_count: 0)}
   scope :high_up_voted, -> {order("votes ASC")}
 
+  def rating_key
+    "questions:#{self.id}:rating"
+  end
+
+  def uprating_key
+    "questions:#{self.id}:uprating"
+  end
+
+  def downrating_key
+    "questions:#{self.id}:downrating"
+  end
+
+  def followers_key
+    "questions:#{self.id}:followers"
+  end
+
+  def followers
+    $redis.smembers followers_key
+  end
+
   class << self
 
     def find_questions_in_topic(topic)

@@ -3,10 +3,11 @@ require 'rails_helper'
 describe UsersController do
 
   before(:each) do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
-      @user = FactoryGirl.create(:user)
-      @other_user = FactoryGirl.create(:user)
-      sign_in @user
+    $redis.flushdb
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @user = FactoryGirl.create(:user)
+    @other_user = FactoryGirl.create(:user)
+    sign_in @user
   end
 
   let(:valid_attributes){{name: "joe", password: "foobar123", password_confirmation: "foobar123", email: "a@email.org"}}
@@ -170,9 +171,8 @@ describe UsersController do
 
     it "assigns for myquestions/following" do
       @questions = FactoryGirl.create_list(:question, 3)
-      @questions[0].followers.push @user.id
-      @questions[0].followers_will_change!
-      @questions[0].save
+      $redis.sadd @questions[0].followers_key, @user.id
+      $redis.sadd @user.questions_following_key, @questions[0].id
       get :myquestions, {filter: 'following'}
       expect(assigns(:questions)).to eq([@questions[0]])
     end
@@ -191,9 +191,8 @@ describe UsersController do
 
     it "assigns for mytopics/following" do
       @topic = ActsAsTaggableOn::Tag.where(name: "hello").first
-      @topic.followers.push @user.id
-      @topic.followers_will_change!
-      @topic.save
+      $redis.sadd @topic.followers_key, @user.id
+      $redis.sadd @user.topics_following_key, @topic.id
       get :mytopics, {filter: "following"}
       expect(assigns(:tags)).to eq([@topic])
     end

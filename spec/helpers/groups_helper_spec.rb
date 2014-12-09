@@ -10,7 +10,7 @@ describe GroupsHelper do
   	a = Array.new
   	users = FactoryGirl.create_list(:user,3)
   	users.each do |user|
-  		a.push(user.name + "-" + user.email)
+  		a.push(user.slug)
   	end  	
   	user_list = a.join(",")
   	helper.add_users_to_group user_list, @group.id
@@ -25,13 +25,13 @@ describe GroupsHelper do
 
   it "single user is given" do
   	user = FactoryGirl.create(:user)
-  	user_list = user.name + "-" + user.email
+  	user_list = user.slug
   	helper.add_users_to_group user_list, @group.id
   	expect(@group.users.count).to be(1)
   end
 
   it "random users are given" do
-  	user_list = "Tim jones-tim@jones.com"
+  	user_list = "twss"
   	helper.add_users_to_group user_list, @group.id
   	expect(@group.users.count).to be(0)
   end

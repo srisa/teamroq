@@ -89,8 +89,7 @@ end
   end
 
 group :test do
-  # gem 'fakeredis', :require => "fakeredis/rspec"
-  gem 'sqlite3'
+  gem 'mock_redis'
   gem 'spork-rails', '~> 4.0.0'
   gem 'capybara', "~> 2.4.4"
   gem 'factory_girl_rails'

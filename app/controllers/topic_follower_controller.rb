@@ -3,22 +3,16 @@ class TopicFollowerController < ApplicationController
   respond_to :html, :xml, :json, :js
   
   def create
-    unless @topic.followers.include? current_user.id
-      @topic.followers.push current_user.id
-      @topic.followers_will_change! 
-    end 
-    @topic.save
-    @followers_count = @topic.followers.count
+    $redis.sadd @topic.followers_key, current_user.id
+    $redis.sadd current_user.topics_following_key, @topic.id
+    @followers_count = $redis.scard @topic.followers_key
     render 'topics/follow'
   end
 
   def destroy
-    if @topic.followers.include? current_user.id
-      @topic.followers.delete current_user.id
-      @topic.followers_will_change! 
-    end 
-    @topic.save
-    @followers_count = @topic.followers.count
+    $redis.srem @topic.followers_key, current_user.id
+    $redis.srem current_user.topics_following_key, @topic.id
+    @followers_count = $redis.scard @topic.followers_key
     render 'topics/follow'
   end
 

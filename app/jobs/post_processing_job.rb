@@ -23,22 +23,5 @@ class PostProcessingJob
 			  user.save
 			end
 	  end
-
-	# Notify the tagged users
-	# @postContent = @post.content
-    # @tagsColl = @postContent.scan(/(@)\[\[(\d+):([\w\s\.\-]+):([\w\s@\.,-\/#!$%\^&\*;:{}=\-_`~()]+)\]\]/)
-    #           .collect { |trigger, id, type, name| 
-    #             { :trigger => trigger, :id => id, :type => type, :name => name }}
-    # @tagsColl.each do |tag| 
-    #   #here notification trigger logic user id can be retrieved by tag[:id]
-    #   #logger.debug "Mentioned name: #{tag[:name]} and id: #{tag[:id]}"
-    #   $redis.zadd("notification:" + tag[:id].to_s, Time.now.to_i, activity_id)
-    #   notification_count_pointer = "/messages/" + tag[:id] + "/ncount"
-    #   $redis.incr(notification_count_pointer)
-    #   notification_count = $redis.get(notification_count_pointer)
-    #   hex = Digest::SHA256.hexdigest(notification_count_pointer)[1,12]
-
-    #   PrivatePub.publish_to("/messages/#{hex}",:message => notification_count )
-    # end
 	end
 end

@@ -1,8 +1,6 @@
 class AddMissingIndexes < ActiveRecord::Migration
    def change
         add_index :taggings, [:tagger_id, :tagger_type]
-        add_index :favorites, [:favorable_id, :favorable_type]
-        add_index :favorites, :user_id
         add_index :levels, :badge_id
         add_index :levels, :user_id
         add_index :levels, [:badge_id, :user_id]

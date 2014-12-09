@@ -23,13 +23,13 @@ class MarkAnswerJob
 
     mark =  sign_factor*POINTS_FOR_FINAL_ANSWER
     #leaderboard update
-    # @answer.topic_list.each do |t|
-    #   if $redis.zscore("rep:topic:"+t,@owner.id).nil?
-    #    $redis.zadd("rep:topic:"+t,mark,@owner.id)
-    #   else
-    #     $redis.zincrby("rep:topic:"+t,mark,@owner.id)
-    #   end
-    # end
+    @answer.topic_list.each do |t|
+      if $redis.zscore("rep:topic:"+t,@owner.id).nil?
+       $redis.zadd("rep:topic:"+t,mark,@owner.id)
+      else
+        $redis.zincrby("rep:topic:"+t,mark,@owner.id)
+      end
+    end
     @log.debug "Awarding good answer to user #{@owner.name} with marks #{mark}"
     award_good_answer(@owner.id, mark)
   end

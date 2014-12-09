@@ -8,7 +8,6 @@ describe TodoListProcessingJob do
     @user.projects.push @project
     @activity = FactoryGirl.create(:activity)
     TodoListProcessingJob.perform @activity.id, @todo_list.id
-  	@user.reload
-  	expect(@user.feed).to include @activity.id
+  	expect(@user.feed).to include @activity.id.to_s
   end
 end

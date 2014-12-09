@@ -3,6 +3,7 @@ require 'rails_helper'
 describe TodoFollowersController do
 
   before(:each) do
+    $redis.flushdb
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = FactoryGirl.create(:user)
     @todo = FactoryGirl.create(:todo, user_id: @user.id)
@@ -32,9 +33,7 @@ describe TodoFollowersController do
     end
 
     it "assigns followers count" do
-      @todo.followers.push @user.id
-      @todo.followers_will_change!
-      @todo.save
+      $redis.sadd @todo.followers_key, @user.id
       patch :destroy, {todo_list_id: @todo_list.id, id: @todo.id, format: 'js'} 
       expect(assigns(:followers_count)).to eq(0)
     end

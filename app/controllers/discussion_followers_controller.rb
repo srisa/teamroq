@@ -3,22 +3,16 @@ class DiscussionFollowersController < ApplicationController
   respond_to :html, :xml, :json, :js
   
   def create
-  	unless @discussion.followers.include? current_user.id
-      @discussion.followers.push current_user.id
-      @discussion.followers_will_change!
-    end
-    @discussion.save
-    @followers_count = @discussion.followers.length
+  	$redis.sadd @discussion.followers_key, current_user.id
+    $redis.sadd current_user.discussions_following_key, @discussion.id
+    @followers_count = $redis.scard @discussion.followers_key
     render 'discussions/follow'
   end
 
   def destroy
-    if @discussion.followers.include? current_user.id
-      @discussion.followers.delete current_user.id
-      @discussion.followers_will_change!
-    end
-    @discussion.save
-    @followers_count = @discussion.followers.length
+    $redis.srem @discussion.followers_key, current_user.id
+    $redis.srem current_user.discussions_following_key, @discussion.id
+    @followers_count = $redis.scard @discussion.followers_key
     render 'discussions/follow'
   end
 
@@ -28,14 +22,13 @@ class DiscussionFollowersController < ApplicationController
     user_arr.each do |u|
       user = User.find(u.strip)
       unless user.nil?
-        unless @discussion.followers.include? current_user.id
-          @discussion.followers.push current_user.id
+        unless $redis.sismember @discussion.followers_key, current_user.id
+          $redis.sadd @discussion.followers_key, current_user.id
+          $redis.sadd current_user.discussions_following_key, @discussion.id
         end
       end
     end
-    @discussion.followers_will_change!
-    @discussion.save
-    @followers_count = @discussion.followers.length
+    @followers_count = $redis.scard @discussion.followers_key
     redirect_to :back
   end
 

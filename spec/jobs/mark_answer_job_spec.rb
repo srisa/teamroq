@@ -8,15 +8,11 @@ describe MarkAnswerJob do
   	@ac_user = FactoryGirl.create(:user)
   	@q_user = FactoryGirl.create(:user)
   	@question = FactoryGirl.create(:question, user_id: @user.id)
-  	@question.followers.push @q_user.id
-  	@question.followers_will_change!
-  	@question.save
+  	$redis.sadd @question.followers_key, @q_user.id
   	@answer = FactoryGirl.create(:answer,question_id: @question.id, user_id: @a_user.id, answer_mark: true)
   	@activity = FactoryGirl.create(:activity, user_id: @ac_user.id)
   	MarkAnswerJob.perform @activity.id, @answer.id
-  	@q_user.reload
-  	@user.reload
-  	expect(@q_user.feed).to include @activity.id
-  	expect(@user.feed).to include @activity.id
+  	expect(@q_user.feed).to include @activity.id.to_s
+  	expect(@user.feed).to include @activity.id.to_s
   end
 end

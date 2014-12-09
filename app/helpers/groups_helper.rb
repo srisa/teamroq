@@ -4,7 +4,7 @@ module GroupsHelper
     logger.debug "User list #{user_list} and group id #{group_id}"
     user_arr = user_list.split(',')
     user_arr.each do |u|
-      user = User.find(u.strip)
+      user = User.where(slug: u.strip).first
       unless user.nil?
         existing_group = user.groups.where(:id => group_id)
         if existing_group.empty?

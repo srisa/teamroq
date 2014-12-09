@@ -32,26 +32,26 @@ describe Answer do
 
     it "upvote should increase rating" do    
       @answer.add_vote 1 ,@user.id
-      expect(@answer.rating).to eq(1)
+      expect(@answer.rating).to eq("1")
     end
 
     it "downvote should decrease rating" do
       @answer.add_vote -1 ,@user.id
-      expect(@answer.rating).to eq(-1)
+      expect(@answer.rating).to eq("-1")
     end
 
     it "repeated upvoting should not work" do
       @answer.add_vote 1 ,@user.id
       @answer.add_vote 1 ,@user.id
       @answer.add_vote 1 ,@user.id
-      expect(@answer.rating).to eq(1)
+      expect(@answer.rating).to eq("1")
     end
 
     it "repeated downvoting should not work" do
       @answer.add_vote -1 ,@user.id
       @answer.add_vote -1 ,@user.id
       @answer.add_vote -1 ,@user.id
-      expect(@answer.rating).to eq(-1)
+      expect(@answer.rating).to eq("-1")
     end
   end
 end

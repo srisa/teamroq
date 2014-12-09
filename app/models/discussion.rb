@@ -17,6 +17,14 @@ class Discussion < ActiveRecord::Base
   scope :updated_today, -> {where("updated_at BETWEEN ? AND ?", 
     Time.zone.now.beginning_of_day, Time.zone.now.end_of_day)}
 
+  def followers_key
+    "discussions:#{self.id}:followers"
+  end
+
+  def followers
+    $redis.smembers followers_key
+  end
+
   def add_bulk_followers_for_discussion user_list
     user_arr = user_list.split(',')
     user_arr.each do |u|

@@ -126,7 +126,8 @@ class UsersController < ApplicationController
       @test = 0
     elsif params[:filter] == 'following'
       @test = 1
-      @questions = Question.where("? = ANY(followers)", current_user.id).paginate(page: params[:page], per_page: 10)
+      ids = $redis.smembers current_user.questions_following_key
+      @questions = Question.find(ids).paginate(page: params[:page], per_page: 10)
     else
       @questions = current_user.questions.paginate(page: params[:page], per_page: 10)
     end
@@ -136,7 +137,8 @@ class UsersController < ApplicationController
   # GET /mytopics
   def mytopics
     if params[:filter] == 'following'
-      @tags = ActsAsTaggableOn::Tag.where("? = ANY(followers)", current_user.id)
+      ids = $redis.smembers current_user.topics_following_key
+      @tags = ActsAsTaggableOn::Tag.find(ids)
     else
       @tags = Question.topic_counts
     end

@@ -7,9 +7,8 @@ class VotesQuestionJob
 		@question = Question.find(question_id)
 		user_id = @question.user_id
         marks = POINTS_FOR_VOTE*vote
-        #@logger.debug "In QuestionVotesJob giving marks #{marks}"	
         @question.topic_list.each do |t|	      
-#          $redis.zincrby("rep:topic:"+t,marks,user_id)      
+          $redis.zincrby("rep:topic:"+t,marks,user_id)      
         end
         award_good_question(user_id, marks)
 	end

@@ -10,17 +10,11 @@ describe DiscussionProcessingJob do
   	@project = FactoryGirl.create(:project)
   	@p_user.projects.push @project
   	@discussion = FactoryGirl.create(:discussion, discussable_type: "Project", discussable_id: @project.id, user_id: @user.id)
-  	@discussion.followers.push @d_user
-  	@discussion.followers_will_change!
-  	@discussion.save
+  	$redis.sadd @discussion.followers_key, @d_user.id
     @activity = FactoryGirl.create(:activity, user_id: @a_user.id)
   	DiscussionProcessingJob.perform @activity.id, @discussion.id
-  	@user.reload
-  	@a_user.reload
-  	@p_user.reload
-  	@d_user.reload
-  	expect(@user.notifications).to include @activity.id
-  	expect(@p_user.feed).to include @activity.id
-  	expect(@d_user.notifications).to include @activity.id
+  	expect(@user.notifications).to include @activity.id.to_s
+  	expect(@p_user.feed).to include @activity.id.to_s
+  	expect(@d_user.notifications).to include @activity.id.to_s
   end
 end

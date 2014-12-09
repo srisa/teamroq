@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206105843) do
+ActiveRecord::Schema.define(version: 20141209090107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,15 +56,12 @@ ActiveRecord::Schema.define(version: 20141206105843) do
     t.integer  "question_id"
     t.integer  "user_id"
     t.boolean  "answer_mark"
-    t.hstore   "store"
-    t.integer  "up_votes",    default: [], array: true
-    t.integer  "down_votes",  default: [], array: true
+    t.integer  "votes"
   end
 
-  add_index "answers", ["down_votes"], name: "index_answers_on_down_votes", using: :gin
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
-  add_index "answers", ["up_votes"], name: "index_answers_on_up_votes", using: :gin
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+  add_index "answers", ["votes"], name: "index_answers_on_votes", using: :btree
 
   create_table "badges", force: true do |t|
     t.string   "name"
@@ -113,12 +110,9 @@ ActiveRecord::Schema.define(version: 20141206105843) do
     t.integer  "user_id"
     t.string   "discussable_type"
     t.integer  "discussable_id"
-    t.hstore   "store"
-    t.integer  "followers",        default: [], array: true
   end
 
   add_index "discussions", ["discussable_id"], name: "index_discussions_on_discussable_id", using: :btree
-  add_index "discussions", ["followers"], name: "index_discussions_on_followers", using: :gin
   add_index "discussions", ["user_id"], name: "index_discussions_on_user_id", using: :btree
 
   create_table "document_versions", force: true do |t|
@@ -149,17 +143,6 @@ ActiveRecord::Schema.define(version: 20141206105843) do
   add_index "documents", ["referencable_id"], name: "index_documents_on_referencable_id", using: :btree
   add_index "documents", ["referencable_type"], name: "index_documents_on_referencable_type", using: :btree
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
-
-  create_table "favorites", force: true do |t|
-    t.integer  "favorable_id"
-    t.string   "favorable_type"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "favorites", ["favorable_id", "favorable_type"], name: "index_favorites_on_favorable_id_and_favorable_type", using: :btree
-  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id", using: :btree
 
   create_table "group_roles", force: true do |t|
     t.integer  "group_id"
@@ -211,10 +194,8 @@ ActiveRecord::Schema.define(version: 20141206105843) do
     t.integer  "postable_id"
     t.string   "postable_type"
     t.string   "title"
-    t.integer  "followers",     default: [], array: true
   end
 
-  add_index "posts", ["followers"], name: "index_posts_on_followers", using: :gin
   add_index "posts", ["postable_id", "postable_type"], name: "index_posts_on_postable_id_and_postable_type", using: :btree
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
@@ -248,17 +229,10 @@ ActiveRecord::Schema.define(version: 20141206105843) do
     t.string   "title"
     t.string   "slug"
     t.integer  "answers_count"
-    t.hstore   "store"
-    t.integer  "followers",     default: [], array: true
-    t.integer  "up_votes",      default: [], array: true
-    t.integer  "down_votes",    default: [], array: true
-    t.integer  "votes",         default: 0
+    t.integer  "votes"
   end
 
-  add_index "questions", ["down_votes"], name: "index_questions_on_down_votes", using: :gin
-  add_index "questions", ["followers"], name: "index_questions_on_followers", using: :gin
   add_index "questions", ["slug"], name: "index_questions_on_slug", using: :btree
-  add_index "questions", ["up_votes"], name: "index_questions_on_up_votes", using: :gin
   add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
   add_index "questions", ["votes"], name: "index_questions_on_votes", using: :btree
 
@@ -290,10 +264,8 @@ ActiveRecord::Schema.define(version: 20141206105843) do
   create_table "tags", force: true do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
-    t.integer "followers",      default: [], array: true
   end
 
-  add_index "tags", ["followers"], name: "index_tags_on_followers", using: :gin
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "todo_lists", force: true do |t|
@@ -318,11 +290,8 @@ ActiveRecord::Schema.define(version: 20141206105843) do
     t.datetime "closed_on"
     t.date     "target_date"
     t.string   "slug"
-    t.hstore   "store"
-    t.integer  "followers",    default: [], array: true
   end
 
-  add_index "todos", ["followers"], name: "index_todos_on_followers", using: :gin
   add_index "todos", ["slug"], name: "index_todos_on_slug", using: :btree
   add_index "todos", ["todo_list_id"], name: "index_todos_on_todo_list_id", using: :btree
   add_index "todos", ["user_id"], name: "index_todos_on_user_id", using: :btree
@@ -357,16 +326,9 @@ ActiveRecord::Schema.define(version: 20141206105843) do
     t.string   "skill"
     t.string   "detail"
     t.string   "time_zone"
-    t.hstore   "store"
-    t.integer  "followers",                    default: [],              array: true
-    t.integer  "feed",                         default: [],              array: true
-    t.integer  "notifications",                default: [],              array: true
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["feed"], name: "index_users_on_feed", using: :gin
-  add_index "users", ["followers"], name: "index_users_on_followers", using: :gin
-  add_index "users", ["notifications"], name: "index_users_on_notifications", using: :gin
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", using: :btree
 

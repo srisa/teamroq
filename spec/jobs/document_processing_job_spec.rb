@@ -9,7 +9,6 @@ describe DocumentProcessingJob do
   	@activity = FactoryGirl.create(:activity)
   	@user.projects.push @project
   	DocumentProcessingJob.perform @activity.id, @document.id
-  	@user.reload	
-  	expect(@user.feed).to include @activity.id
+  	expect(@user.feed).to include @activity.id.to_s
   end
 end

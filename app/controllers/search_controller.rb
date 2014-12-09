@@ -43,18 +43,3 @@ class SearchController < ApplicationController
 
 end
 
-# Monkey patching
-class ActsAsTaggableOn::Tag
-  def attributes
-   super.merge({"context" => "topic", "path" => "/topics/"+self.name})
-  end
-
-  def path
-    "/topics/"+name
-  end
-
-  def context
-    "topic"
-  end
-
-end

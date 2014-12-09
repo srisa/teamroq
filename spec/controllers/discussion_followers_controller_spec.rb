@@ -3,6 +3,7 @@ require 'rails_helper'
 describe DiscussionFollowersController, :type => :controller do
 
   before(:each) do
+    $redis.flushdb
     @user = FactoryGirl.create(:user)
     @project = FactoryGirl.create(:project)
     @discussion = FactoryGirl.create(:discussion, discussable_id: @project.id, discussable_type: "Project",user_id: @user.id)

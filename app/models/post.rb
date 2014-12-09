@@ -5,7 +5,6 @@ class Post < ActiveRecord::Base
   
   has_many :comments, :as => :commentable, :dependent => :destroy
   has_many :documents , :as => :attachable
-  has_many  :favorites, :as => :favorable
   has_one :activity, :as => :trackable, :dependent => :destroy
   belongs_to :user
   belongs_to :postable, :polymorphic => true

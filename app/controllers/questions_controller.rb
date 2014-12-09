@@ -94,8 +94,6 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @owner = @question.user
     @question.add_vote(value, current_user.id)
-    @question.up_votes_will_change!
-    @question.down_votes_will_change!
     @question.save
     @votable = @question
     render 'votes/vote'

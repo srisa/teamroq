@@ -7,11 +7,8 @@ describe QuestionProcessingJob do
     @question = FactoryGirl.create(:question, user_id: @user.id, topic_list: "hello")
     @topic = ActsAsTaggableOn::Tag.where(name: "hello").first
     @activity = FactoryGirl.create(:activity)
-    @topic.followers.push @topic_user.id
-    @topic.followers_will_change!
-    @topic.save
+    $redis.sadd @topic.followers_key, @topic_user.id
     QuestionProcessingJob.perform @activity.id, @question.id
-    @topic_user.reload
-    expect(@topic_user.feed).to include @activity.id
+    expect(@topic_user.feed).to include @activity.id.to_s
   end
 end

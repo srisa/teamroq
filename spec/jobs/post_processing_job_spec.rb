@@ -10,7 +10,6 @@ describe PostProcessingJob do
     @post = FactoryGirl.create(:post, postable_type: "Group", postable_id: @group.id)
  	@activity = FactoryGirl.create(:activity)
  	PostProcessingJob.perform @activity.id, @post.id
- 	@group_user.reload
- 	expect(@group_user.feed).to include @activity.id
+ 	expect(@group_user.feed).to include @activity.id.to_s
   end
 end

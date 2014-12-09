@@ -11,9 +11,7 @@ describe TodoProcessingJob do
     @project.users.push @p_user
     @activity = FactoryGirl.create(:activity, user_id: @t_user.id)
     TodoProcessingJob.perform @activity.id, @todo.id
-    @p_user.reload
-    @t_user.reload
-    expect(@p_user.feed).to include @activity.id
+    expect(@p_user.feed).to include @activity.id.to_s
     expect(@t_user.feed).to eq([])   
   end
 end

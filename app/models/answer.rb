@@ -14,11 +14,20 @@ class Answer < ActiveRecord::Base
   delegate :topics, :to=> :question
   delegate :topic_list, :to=> :question
 
+  def rating_key
+    "answers:#{self.id}:rating"
+  end
+
+  def uprating_key
+    "answers:#{self.id}:uprating"
+  end
+
+  def downrating_key
+    "answers:#{self.id}:downrating"
+  end
 
   def rating
-    up_votes = self.up_votes.length
-    down_votes = self.down_votes.length
-    up_votes - down_votes
+    $redis.get rating_key
   end
 
   def add_vote value ,current_user_id
@@ -30,31 +39,35 @@ class Answer < ActiveRecord::Base
   end
 
 
-# IF the user has down voted, we remove his downvote and add his upvote
-
   def add_upvote user_id
-    has_upvoted = self.up_votes.include? user_id
-    has_downvoted = self.down_votes.include? user_id
+    has_upvoted = $redis.sismember(uprating_key,user_id)
+    has_downvoted = $redis.sismember(downrating_key,user_id)
     if !has_upvoted
-      self.up_votes.push user_id
+      $redis.sadd(uprating_key, user_id)
+      $redis.incr(rating_key)
       Resque.enqueue(AnswerVotesJob, self.id,1)
-    elsif has_downvoted
-      self.down_votes.delete user_id
-      self.up_votes.push user_id
-      Resque.enqueue(AnswerVotesJob, self.id,2)
+      if has_downvoted
+        $redis.srem(downrating_key, user_id)
+        $redis.incr(rating_key)
+        Resque.enqueue(AnswerVotesJob, self.id,2)
+      end
     end
+    self.votes = $redis.get(rating_key)
   end
 
   def add_downvote id
-    has_upvoted = self.up_votes.include? user_id
-    has_downvoted = self.down_votes.include? user_id
+    has_upvoted = $redis.sismember(uprating_key,user_id)
+    has_downvoted = $redis.sismember(downrating_key,user_id)
     if !has_downvoted
-      self.down_votes.push user_id
-      Resque.enqueue(AnswerVotesJob, self.id,2)
-    elsif has_upvoted
-      self.up_votes.delete user_id
-      self.down_votes.push user_id
-      Resque.enqueue(AnswerVotesJob, self.id,1)
+      $redis.sadd(downrating_key, user_id)
+      $redis.decr(rating_key)
+      Resque.enqueue(AnswerVotesJob, self.id,-2)
+      if has_upvoted
+        $redis.srem(uprating_key, user_id)
+        $redis.deccr(rating_key)
+        Resque.enqueue(AnswerVotesJob, self.id,-1)
+      end
     end
+    self.votes = $redis.get(rating_key)
   end
 end

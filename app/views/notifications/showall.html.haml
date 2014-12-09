@@ -6,20 +6,7 @@
           %h4 Notifications
 
       .row
-        - if @activities_array[0].presence
-          .twelve.columns.activity_group
-            %h5 Activities today
-          .twelve.columns.activity_list
-            = render partial: 'scoped_activities', collection: @activities_array[0], as: :activity
-      .row
-        - if @activities_array[1].presence
-          .twelve.columns.activity_group
-            %h5 Activities this week
-          .twelve.columns.activity_list
-            = render partial: 'scoped_activities', collection: @activities_array[1], as: :activity
-      .row
-        - if @activities_array[2].presence
-          .twelve.columns.activity_group
-            %h5 Activities before this week
-          .twelve.columns.activity_list
-            = render partial: 'scoped_activities', collection: @activities_array[2], as: :activity
+        - if @activities.presence
+          .twelve.columns.small-top-margin
+            = render partial: 'scoped_activities', collection: @activities, as: :activity
+    

@@ -3,6 +3,7 @@ require 'rails_helper'
 describe QuestionFollowersController do
 
 	before(:each) do
+	$redis.flushdb
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = FactoryGirl.create(:user)
     @question = FactoryGirl.create(:question)
@@ -31,9 +32,7 @@ describe QuestionFollowersController do
 			end
 		end
 		it "assigns followers count" do
-			@question.followers.push @user.id
-      		@question.followers_will_change!
-      		@question.save
+			$redis.sadd @question.followers_key, @user.id
 			patch :destroy, {id: @question.id, format: 'js' }
 			expect(assigns(:followers_count)).to eq(0)
 		end

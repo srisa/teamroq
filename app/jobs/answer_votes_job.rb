@@ -8,9 +8,9 @@ class AnswerVotesJob
 		user_id = @answer.user_id
 		marks = POINTS_FOR_VOTE*vote	
 	  
-	   #  @answer.topic_list.each do |t|      
-	  	#   $redis.zincrby("rep:topic:"+t,marks,user_id)
-		  # end
+	    @answer.topic_list.each do |t|      
+	  	  $redis.zincrby("rep:topic:"+t,marks,user_id)
+		  end
 	    award_good_answer(user_id, marks)
 	end
 end

@@ -95,8 +95,6 @@ class AnswersController < ApplicationController
     value = params[:type] == "up" ? 1 : -1
     @answer = Answer.find(params[:id])
     @answer.add_vote(value, current_user.id)
-    @answer.up_votes_will_change!
-    @answer.down_votes_will_change!
     @answer.save
     @votable = @answer
     render 'votes/vote'   

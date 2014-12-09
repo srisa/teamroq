@@ -24,20 +24,19 @@ class AnswerProcessingJob
     #add notification only if answer is added some one else
     unless @owner.id == @question_owner.id
       @question_owner.add_to_notification activity_id
-      #notification bubble to be shown and feed under notification dropdown
-      notification_count_pointer = "/messages/" + @question_owner.id.to_s + "/ncount"
-      increase_notification_pointer(notification_count_pointer)
+      #notification bubble to be shown and feed under notification dropdown     
+      increase_notification_pointer(@question_owner.notification_pointer)
       @question_owner.save
     end
 
-		# #leaderboard update
-  #   @answer.topic_list.each do |t|
-  #     if $redis.zscore("rep:topic:"+t,@owner.id).nil?
-  #      $redis.zadd("rep:topic:"+t,POINTS_FOR_ANSWER,@owner.id)
-  #     else
-  #       $redis.zincrby("rep:topic:"+t,POINTS_FOR_ANSWER,@owner.id)
-  #     end
-  #   end
+		#leaderboard update
+    @answer.topic_list.each do |t|
+      if $redis.zscore("rep:topic:"+t,@owner.id).nil?
+       $redis.zadd("rep:topic:"+t,POINTS_FOR_ANSWER,@owner.id)
+      else
+        $redis.zincrby("rep:topic:"+t,POINTS_FOR_ANSWER,@owner.id)
+      end
+    end
 
     award_teamplayer(@activity_user_id)
     award_proactive_answers(@activity_user_id,@question)

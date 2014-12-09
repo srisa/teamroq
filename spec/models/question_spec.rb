@@ -55,42 +55,26 @@ describe Question do
 
     it "upvote should increase rating" do    
       @question.add_vote 1, @user.id
-      expect(@question.votes).to eq(1)
+      expect(@question.rating).to eq("1")
     end
 
     it "downvote should decrease rating" do
       @question.add_vote -1 ,@user.id
-      expect(@question.votes).to eq(-1)
+      expect(@question.rating).to eq("-1")
     end
 
     it "repeated upvoting should not work" do
       @question.add_vote 1, @user.id
       @question.add_vote 1, @user.id
       @question.add_vote 1, @user.id
-      expect(@question.votes).to eq(1)
+      expect(@question.rating).to eq("1")
     end
 
     it "repeated downvoting should not work" do
       @question.add_vote -1, @user.id
       @question.add_vote -1, @user.id
       @question.add_vote -1, @user.id
-      expect(@question.votes).to eq(-1)
+      expect(@question.rating).to eq("-1")
     end
-
-    context "Jobs" do
-
-      it "downvote should queue an item" do
-        @question.add_vote -1 ,@user.id
-        expect(VotesQuestionJob).to have_queued(@question.id, 2).in(:qvotes) 
-      end
-
-      it "upvote should queue an item" do
-        @question.add_vote 1 ,@user.id
-        expect(VotesQuestionJob).to have_queued(@question.id, 1).in(:qvotes)
-      end
-    end
-
   end
-
-
 end

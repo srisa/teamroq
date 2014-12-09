@@ -46,3 +46,28 @@ class Topic < ActiveRecord::Base
     end
   end
 end
+
+# Monkey patching
+class ActsAsTaggableOn::Tag
+
+  def followers_key
+    "topics:#{self.id}:followers"
+  end
+
+  def followers
+    $redis.smembers followers_key
+  end
+
+  def attributes
+   super.merge({"context" => "topic", "path" => "/topics/"+self.name})
+  end
+
+  def path
+    "/topics/"+name
+  end
+
+  def context
+    "topic"
+  end
+
+end

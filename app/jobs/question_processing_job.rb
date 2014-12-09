@@ -20,11 +20,13 @@ class QuestionProcessingJob
 		    user.save
       end
       #leader board part here awarding 5 points for questions
-      # if $redis.zscore("rep:topic:"+t,@user.id).nil?
-      #   $redis.zadd("rep:topic:"+t,POINTS_FOR_QUESTION,@user.id)
-      # else
-      #   $redis.zincrby("rep:topic:"+t,POINTS_FOR_QUESTION,@user.id)
-      # end
+      @question.topic_list.each do |t|
+        if $redis.zscore("rep:topic:"+t, @user.id).nil?
+          $redis.zadd("rep:topic:"+t,POINTS_FOR_QUESTION,@user.id)
+        else
+          $redis.zincrby("rep:topic:"+t,POINTS_FOR_QUESTION,@user.id)
+        end
+      end
 	   end
   end
 end

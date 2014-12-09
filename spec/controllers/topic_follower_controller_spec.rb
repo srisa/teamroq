@@ -3,6 +3,7 @@ require 'rails_helper'
 describe TopicFollowerController do
 
   before(:each) do
+    $redis.flushdb
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = FactoryGirl.create(:user)
     @question = FactoryGirl.create(:question, topic_list: "test")
@@ -33,9 +34,7 @@ describe TopicFollowerController do
     it "assigns followers count" do
       @question = FactoryGirl.create(:question, topic_list: "test_follow")
       @topic = ActsAsTaggableOn::Tag.where(name: "test_follow").first
-      @topic.followers.push @user.id
-      @topic.followers_will_change!
-      @topic.save
+      $redis.sadd @topic.followers_key, @user.id
       patch :destroy, {name: "test_follow", format: 'js'}
       expect(assigns(:followers_count)).to eq(0)
     end

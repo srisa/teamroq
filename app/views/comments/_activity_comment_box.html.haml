@@ -1,7 +1,7 @@
 .wrapper-box
   .row{:id => "comment-list-activity#{activity.id}"}
     - commentable.comments.reverse.each do |comment|
-      .row
+      .row.small-top-margin
         .one.columns      
           = image_tag comment.user.profile_picture.url(:little), :class => "middle-image"
         .eleven.columns

@@ -3,7 +3,7 @@ module ProjectsHelper
     unless user_list.nil? || user_list.empty?
 	    user_arr = user_list.split(',')
 	    user_arr.each do |u|
-		    user = User.find(u.strip)
+		    user = User.where(slug: u.strip).first
 		    unless user.nil?
 			    existing_project = user.projects.where(:id => project.id)
 		      if existing_project.empty?

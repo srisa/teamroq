@@ -2,6 +2,7 @@ require 'rails_helper'
 describe DiscussionsController do
   render_views
   before(:each) do
+    $redis.flushdb
     @user = FactoryGirl.create(:user)
     @project = FactoryGirl.create(:project)
     @discussion = FactoryGirl.create(:discussion, discussable_id: @project.id, discussable_type: "Project",user_id: @user.id)
@@ -30,9 +31,8 @@ describe DiscussionsController do
     end
 
     it "discussions/filter/followed" do
-      @discussion.followers.push @user.id
-      @discussion.followers_will_change!
-      @discussion.save
+      $redis.sadd @discussion.followers_key, @user.id
+      $redis.sadd @user.discussions_following_key, @discussion.id
       @second_discussion = FactoryGirl.create(:discussion, discussable_id: @project.id, discussable_type: "Project",user_id: @user.id)
       get :index, {project_id: @project.id, filter: "followed"}
       expect(assigns(:discussions)).to eq([@discussion])
@@ -58,9 +58,7 @@ describe DiscussionsController do
     end
 
     it "assigns watchers" do
-      @discussion.followers.push @user.id
-      @discussion.followers_will_change!
-      @discussion.save
+      $redis.sadd @discussion.followers_key, @user.id
       get :show, {project_id: @project.id, :id => @discussion.id}
       expect(assigns(:watchers)).to eq([@user])
     end

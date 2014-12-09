@@ -5,24 +5,18 @@ class TodoFollowersController < ApplicationController
 
   # PATCH /todo_lists/1/todos/follow
   def create
-    unless @todo.followers.include? current_user.id
-      @todo.followers.push current_user.id
-      @todo.followers_will_change!    
-    end	
-    @todo.save
-    @followers_count = @todo.followers.length
+    $redis.sadd @todo.followers_key, current_user.id
+    $redis.sadd current_user.todos_following_key, @todo.id
+    @followers_count = $redis.scard @todo.followers_key
     render 'todos/follow'
   end
 
 
   # PATCH /todo_lists/1/todos/destroy
   def destroy
-    if @todo.followers.include? current_user.id
-      @todo.followers.delete current_user.id
-      @todo.followers_will_change! 
-    end 
-    @todo.save
-    @followers_count = @todo.followers.length
+    $redis.srem @todo.followers_key, current_user.id
+    $redis.srem current_user.todos_following_key, @todo.id
+    @followers_count = $redis.scard @todo.followers_key
     render 'todos/follow' 
   end
 
@@ -33,14 +27,13 @@ class TodoFollowersController < ApplicationController
     user_arr.each do |u|
       user = User.find(u.strip)
       unless user.nil?
-        unless @todo.followers.include? user.id
-          @todo.followers.push user.id
+        unless $redis.sismember @todo.followers_key, current_user.id
+          $redis.sadd @todo.followers_key, current_user.id
+          $redis.sadd current_user.todos_following_key, @todo.id
         end
       end
     end
-    @todo.followers_will_change!
-    @todo.save
-    @followers_count = @todo.followers.length
+    @followers_count = $redis.scard @todo.followers_key
     redirect_to :back
   end
 

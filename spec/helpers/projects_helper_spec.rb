@@ -8,7 +8,7 @@ describe ProjectsHelper do
   	a = Array.new
   	users = FactoryGirl.create_list(:user,3)
   	users.each do |user|
-  		a.push(user.name + "-" + user.email)
+  		a.push(user.slug)
   	end  	
   	user_list = a.join(",")
   	helper.add_users_to_project user_list, @project
@@ -23,13 +23,13 @@ describe ProjectsHelper do
 
   it "single user is given" do
   	user = FactoryGirl.create(:user)
-  	user_list = user.name + "-" + user.email
+  	user_list = user.slug
   	helper.add_users_to_project user_list, @project
   	expect(@project.users.count).to be(1)
   end
 
   it "random users are given" do
-  	user_list = "Tim jones-tim@jones.com"
+  	user_list = "tim-jones"
   	helper.add_users_to_project user_list, @project
   	expect(@project.users.count).to be(0)
   end

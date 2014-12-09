@@ -11,7 +11,10 @@ class DiscussionsController < ApplicationController
     elsif params[:filter] == 'popular'
       @discussions = @project.discussions.recent.paginate(page: params[:page], per_page: 10)
     elsif params[:filter] == 'followed'
-      @discussions = @project.discussions.where("? = ANY(followers)", current_user.id).paginate(page: params[:page], per_page: 10)
+      followed_discussions = $redis.smembers current_user.discussions_following_key
+      discussion_ids = @project.discussions.pluck(:id).map(&:to_s)
+      ids =  discussion_ids & followed_discussions
+      @discussions = @project.discussions.find(ids).paginate(page: params[:page], per_page: 10)
     elsif params[:filter] == 'created'  
       @discussions = @project.discussions.created_by(current_user.id).paginate(page: params[:page], per_page: 10)
     else

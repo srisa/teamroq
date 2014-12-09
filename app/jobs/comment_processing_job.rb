@@ -12,7 +12,6 @@ class CommentProcessingJob
     @comment = Comment.find(comment_id)
   	@commentable = @comment.commentable
   	owner = @commentable.user
-    notification_count_pointer = "/messages/" + owner.id.to_s + "/ncount"
     @activity = Activity.find(activity_id)
     @activity_user_id = @activity.user_id
   	# If comments are for questions then update the question owner
@@ -20,7 +19,7 @@ class CommentProcessingJob
       unless owner.id == @activity_user_id
         owner.add_to_notification activity_id
         owner.save
-        increase_notification_pointer(notification_count_pointer)
+        increase_notification_pointer(owner.notification_pointer)
       end
       @users = User.find(@commentable.followers)
       @users.each do |user| 
@@ -39,7 +38,7 @@ class CommentProcessingJob
       owner.add_to_feed activity_id
       unless owner.id == @activity_user_id
         owner.add_to_notification activity_id
-        increase_notification_pointer(notification_count_pointer)
+        increase_notification_pointer(owner.notification_pointer)
       end
       owner.save
       award_teamplayer(@activity_user_id)
@@ -48,7 +47,7 @@ class CommentProcessingJob
       owner.add_to_feed activity_id
       unless owner.id == @activity_user_id
         owner.add_to_notification activity_id
-        increase_notification_pointer(notification_count_pointer)
+        increase_notification_pointer(owner.notification_pointer)
       end
       owner.save
       award_teamplayer(@activity_user_id)
