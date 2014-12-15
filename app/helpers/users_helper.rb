@@ -13,27 +13,23 @@ module UsersHelper
   end
 
   def follows_question?(question)
-    question.followers.include? self.id
+    $redis.sismember question.followers_key, self.id
   end
 
   def follows_todo?(todo)
-    todo.followers.include? self.id
-  end
-
-  def follows_post?(post)
-    post.followers.include? self.id
+    $redis.sismember todo.followers_key, self.id
   end
 
   def follows_discussion?(discussion)
-    discussion.followers.include? self.id
+    $redis.sismember discussion.followers_key, self.id
   end
 
   def follows_user?(user)
-    user.followers.include? self.id
+    $redis.sismember user.followers_key, self.id
   end
 
   def follows_topic?(topic)
-    topic.followers.include? self.id
+    $redis.sismember topic.followers_key, self.id
   end
 
   def change_points(options)
