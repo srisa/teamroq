@@ -163,10 +163,6 @@ describe ProjectsController do
     end
   end
 
-  describe "GET charts" do
-    it "assigns charts values" 
-  end
-
   describe "GET documents" do
     before(:each) do
       @document = FactoryGirl.create(:document)

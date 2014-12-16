@@ -16,15 +16,6 @@ Teamroq::Application.routes.draw do
   get '/todos/searchuser', to: 'todos#searchuser'
   post '/projects/add_users', to: 'projects#add_users'
   post '/groups/add_users', to: 'groups#add_users'
-  
-
-  # get 'tag' => 'topics#create'
-  # get 'untag' => 'topics#destroy'
-
-  # get 'pagination/interesting_questions' => 'pagination#interesting_questions', :as => :interesting_questions
-  # get 'pagination/newest_questions' => 'pagination#newest_questions', :as => :newest_questions
-  # get 'pagination/unanswered_questions' => 'pagination#unanswered_questions', :as => :unanswered_questions
-  # get 'pagination/votes_questions' => 'pagination#votes_questions', :as => :votes_questions
 
   get 'comments/showcomment', to: 'comments#showcomment'
 
@@ -59,7 +50,6 @@ Teamroq::Application.routes.draw do
       get 'documents(/filter/:filter)', :to => "projects#documents"
       get 'standup', :to => "projects#standup"
       get 'users'
-      get 'charts', :to => "projects#charts"
     end
     resources :documents do 
       resources :document_versions do
@@ -143,7 +133,6 @@ Teamroq::Application.routes.draw do
     end
   end
 
- 
   devise_for :users, :controllers => { :passwords => 'passwords'}, :path_names => { :sign_in => "login", :sign_out => "logout"}
   
   resources :posts do
@@ -175,7 +164,6 @@ Teamroq::Application.routes.draw do
       post :markanswer
     end
   end
-
 
   resources :users do
     resources :posts

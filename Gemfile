@@ -50,8 +50,6 @@ gem 'state_machine', "~> 1.2.0"
 gem 'rolify', "~> 3.4.1"
 # Pagination
 gem 'will_paginate', "~> 3.0.7"
-# Charts
-gem "chartkick", "~> 1.3.2"
 # Utility for dates
 gem 'groupdate', "~> 2.3.0"
 

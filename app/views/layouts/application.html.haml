@@ -41,8 +41,6 @@
             .span8
               %ul.bottom-links
 
-    = javascript_include_tag "//www.google.com/jsapi","chartkick"
-    = yield :charts_js
 
     - if user_signed_in?
       - val = "/messages/" + current_user.id.to_s + "/ncount"

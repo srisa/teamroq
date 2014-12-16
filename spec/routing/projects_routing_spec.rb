@@ -47,9 +47,5 @@ describe ProjectsController do
       expect(get("/projects/1/users")).to route_to("projects#users", id: "1")
     end
 
-    it "routes charts" do
-      expect(get("/projects/1/charts")).to route_to("projects#charts", id: "1")
-    end
-
   end
 end

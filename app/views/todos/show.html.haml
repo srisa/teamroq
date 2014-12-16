@@ -103,7 +103,7 @@
                   )
                 .row.change-date-form{:style => "display:none"}
                   .twelve.columns
-                    = form_for [@todo_list,@todo], :url => {:action => :change_date}, method: :put, :html => {:id => 'form-change-date'} do |f|
+                    = form_for [@todo_list,@todo], :url => {:action => :change_date}, method: :patch, :html => {:id => 'form-change-date'} do |f|
                       %fieldset
                         %legend
                           %h5

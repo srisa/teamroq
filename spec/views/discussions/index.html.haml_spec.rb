@@ -14,7 +14,6 @@ describe "discussions/index" do
     expect(rendered).to have_link("Users")
     expect(rendered).to have_link("Discussions")
     expect(rendered).to have_link("Standup Meeting")
-    expect(rendered).to have_link("Charts")
     expect(rendered).to have_link("UPDATED TODAY")
     expect(rendered).to have_link("MOST POPULAR")
     expect(rendered).to have_link("FOLLOWED BY ME")

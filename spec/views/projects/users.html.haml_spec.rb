@@ -20,7 +20,6 @@ describe "projects/users" do
     expect(rendered).to have_link("Discussions")
     expect(rendered).to have_link("Standup Meeting")
     expect(rendered).to have_link("Documents")
-    expect(rendered).to have_link("Charts")
   end
 
   it "renders users" do

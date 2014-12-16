@@ -16,9 +16,6 @@
       = link_to "/projects/#{@attachable.to_param}/documents" do
         %i.fa.fa-fw.fa-lg.fa-file-o
         &nbsp;&nbsp;Documents
-      = link_to "/projects/#{@attachable.to_param}/charts"do
-        %i.fa.fa-fw.fa-lg.fa-line-chart
-        &nbsp;&nbsp;Charts
     - elsif @attachable.is_a? Group
       = link_to @attachable, :class=> " active"  do
         %i.fa.fa-fw.fa-lg.fa-newspaper-o

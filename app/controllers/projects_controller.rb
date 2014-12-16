@@ -116,36 +116,6 @@ class ProjectsController < ApplicationController
     redirect_to :back
   end
 
-  # GET /projects/1/charts
-  def charts
-    @project = @user.projects.find(params[:id])
-    data_object = @project.todos.delayed_tasks.not_closed.count(:group =>'todo_list')
-    @data1 = modify_hash_to_use_key_name data_object
-    
-    delayed_count = @project.todos.delayed_tasks.not_closed.count
-    pending_count = @project.todos.not_closed.count - delayed_count
-    closed_count = @project.todos.by_closed.count
-    
-    @data2 = Hash.new
-    @data2["Delayed Open Tasks"] = delayed_count
-    @data2["On Time Open Tasks"] = pending_count
-    @data2["Closed Tasks"] = closed_count
-    @all_delayed_tasks = @project.todos.all_delayed
-    
-    data1_series1 = sum_values_in_hash @all_delayed_tasks.group_by_week("todos.target_date").count
-    data2_series1 = sum_values_in_hash @project.todos.closed_delayed.group_by_week("todos.closed_on").count
-    
-    @line_chart_series3 = subtract_hash data1_series1,data2_series1
-    @line_chart_series1 = sum_values_in_hash @project.todos.group_by_week("todos.created_at").count
-    @line_chart_series2 = sum_values_in_hash @project.todos.group_by_week("todos.closed_on").count
-    delayed_by_users= @all_delayed_tasks.count(:group => 'user')
-    @delayed_users = modify_hash_to_use_key_name delayed_by_users
-    respond_to do |format|
-      format.html 
-      format.json { render json: @project }
-    end
-  end
-
   # GET /projects/1/documents
   def documents
     @attachable = @project = @user.projects.find(params[:id])

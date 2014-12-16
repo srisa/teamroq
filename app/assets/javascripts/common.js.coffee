@@ -233,8 +233,8 @@ $("document").ready ->
 
         success: (data) ->
           response $.map(data, (item) ->
-            label: item.name
-            value: item.name
+            label: item.slug
+            value: item.slug
             id: item.id
           )
     minLength: 1
