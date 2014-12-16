@@ -17,7 +17,7 @@
 
     %span.tick-box
       -if todo.can_close?
-        = link_to '<i class="fa fa-check"></i>'.html_safe, close_todo_list_todo_path(todo.todo_list,todo), :method =>'put', :class => 'weighted', title: "Close this task"
+        = link_to '<i class="fa fa-check"></i>'.html_safe, close_todo_list_todo_path(todo.todo_list,todo), :method =>'patch', :class => 'weighted', title: "Close this task"
       = link_to '<i class="fa fa-edit"></i>'.html_safe, edit_todo_list_todo_path(todo.todo_list,todo),  :class => 'weighted', title: "Edit this task"
       = link_to '<i class="fa fa-trash"></i>'.html_safe, todo_list_todo_path(todo.todo_list,todo), :method =>'delete', :class => 'weighted', data: {:confirm => "Are you sure?"},title: "Delete this task"
 

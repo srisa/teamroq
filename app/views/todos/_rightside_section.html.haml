@@ -13,9 +13,9 @@
     .twelve.columns
       -if @todo.can_close?
         .medium.danger.btn.metro.rounded
-          = link_to 'Close', close_todo_list_todo_path(@todo_list,@todo), :method =>'put', :class => 'change-state weighted'
+          = link_to 'Close', close_todo_list_todo_path(@todo_list,@todo), :method =>'patch', :class => 'change-state weighted'
       -else 
         .medium.danger.btn.metro.rounded
-          = link_to 'Reopen', reopen_todo_list_todo_path(@todo_list,@todo), :method =>'put', :class => 'change-state weighted'      
+          = link_to 'Reopen', reopen_todo_list_todo_path(@todo_list,@todo), :method =>'patch', :class => 'change-state weighted'      
 
  

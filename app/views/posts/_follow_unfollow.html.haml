@@ -1,6 +1,6 @@
 - unless current_user.follows_post?(@post)
   .medium.primary.btn.metro.rounded
-    =link_to "Follow", [:follow,@postable,@post], :method =>'put', :remote=> :true, :class => "weighted"
+    =link_to "Follow", [:follow,@postable,@post], :method =>'patch', :remote=> :true, :class => "weighted"
 - else
   .medium.danger.btn.metro.rounded
-    =link_to "Unfollow", [:unfollow,@postable,@post], :method =>'put', :remote=> :true, :class=> "weighted"
+    =link_to "Unfollow", [:unfollow,@postable,@post], :method =>'patch', :remote=> :true, :class=> "weighted"

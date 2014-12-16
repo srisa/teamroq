@@ -1,6 +1,6 @@
 - unless current_user.follows_discussion?(@discussion)
   .medium.primary.btn.metro.rounded
-    =link_to "Follow", [:follow,@project,@discussion], :method =>'put', :remote=> :true, :class => "weighted"
+    =link_to "Follow", [:follow,@project,@discussion], :method =>'patch', :remote=> :true, :class => "weighted"
 - else
   .medium.danger.btn.metro.rounded
-    =link_to "Unfollow", [:unfollow,@project,@discussion], :method =>'put', :remote=> :true, :class=> "weighted"
+    =link_to "Unfollow", [:unfollow,@project,@discussion], :method =>'patch', :remote=> :true, :class=> "weighted"

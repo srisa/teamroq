@@ -60,7 +60,7 @@
       .row
         .twelve.columns
           .padding-box
-            = form_tag add_followers_project_discussion_path(@project,@discussion), :method => 'put', :id => 'add-followers-form' do
+            = form_tag add_followers_project_discussion_path(@project,@discussion), :method => 'patch', :id => 'add-followers-form' do
               %h5.grey
                 Add Watchers
               .field
