@@ -10,6 +10,7 @@ Teamroq is an open source enterprise collaboration platform. It is ideal for org
 
 ### Setup Guide ###
 
+[Installation Instructions](https://github.com/srisa/teamroq/wiki/Setup-Guide)
 
 ### RoadMap ###
 

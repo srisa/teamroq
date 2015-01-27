@@ -1,6 +1,10 @@
 namespace :teamroq do
 	desc "Creates configuration file"
 	task :install => :environment do 
+		require "#{Rails.root}/db/gioco/create_badge_Level 1_Team Player.rb"
+		require "#{Rails.root}/db/gioco/create_badge_Level 1_Proactive.rb"
+		require "#{Rails.root}/db/gioco/create_badge_Level 1_Good Question.rb"
+		require "#{Rails.root}/db/gioco/create_badge_Level 1_Good Answer.rb"
 		cp 'lib/internal/application.yml.sample', 'config/application.yml'
 		puts "Application configuration file generated at  'config/application.yml'"
 		puts "Edit the file before you continue"
