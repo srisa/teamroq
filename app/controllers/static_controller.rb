@@ -5,7 +5,7 @@ class StaticController < ApplicationController
       redirect_to activities_path 
       return
     end
-    render :layout => false
+    redirect_to new_user_session_path
   end
 
 end
