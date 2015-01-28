@@ -5,6 +5,7 @@ test:
   server: http://localhost/faye/faye
   secret_token: "secret"
 production:
-  #e.g., https://www.xxxx.com/faye/faye
+  #Use your domaine.g., https://teamroq.example.com/faye/faye
   server: https://www.example.org/faye/faye
-  secret_token: "USE A REALLY LONG HEX STRING HERE"
+  # Run 'rake secret' and paste the output here.
+  secret_token: ""

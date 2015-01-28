@@ -19,5 +19,9 @@ Gemfile.lock
 /config/initializers/bullet.rb
 capybar*.html
 
+
 # Ignore application configuration
 /config/application.yml
+/config/database.yml
+/config/redis.yml
+/config/private_pub.yml

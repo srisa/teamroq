@@ -42,7 +42,4 @@ production:
   mailer_smtp_port: 
   # Domain name where Teamroq is installed for e.g. teamroq.xxx.com
   domain_name: ""
-  # faye location , add your website name here e.g., https://www.acme.com/faye/faye
-  faye_location: "https://www.<ADD YOUR HOST>.com/faye/faye"
-  # Generate a very long hex value, that will be used as your secret token.
-  faye_secret_token: "<ADD YOUR OWN SECRET TOKEN HERE>"
+

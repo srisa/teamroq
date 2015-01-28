@@ -5,9 +5,9 @@ namespace :teamroq do
 		require "#{Rails.root}/db/gioco/create_badge_Level 1_Proactive.rb"
 		require "#{Rails.root}/db/gioco/create_badge_Level 1_Good Question.rb"
 		require "#{Rails.root}/db/gioco/create_badge_Level 1_Good Answer.rb"
-		cp 'lib/internal/application.yml.sample', 'config/application.yml'
+		cp 'lib/internal/application.yml.example', 'config/application.yml'
 		puts "Application configuration file generated at  'config/application.yml'"
-		puts "Edit the file before you continue"
+		puts "Important: Edit the configuration file before you continue"
 	end
 
 	namespace :setup do
