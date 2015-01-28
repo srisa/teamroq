@@ -65,6 +65,9 @@ gem 'jquery-ui-rails', "~> 5.0.2"
 gem 'uglifier', "~> 2.5.3"
 
 
+gem 'capistrano', '~> 3.3.0'
+
+
 group :development,:test do
   gem 'faker'
   gem 'guard'
