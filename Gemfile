@@ -66,6 +66,12 @@ gem 'uglifier', "~> 2.5.3"
 
 
 gem 'capistrano', '~> 3.3.0'
+# rails specific capistrano funcitons
+gem 'capistrano-rails', '~> 1.1.0'
+# integrate bundler with capistrano
+gem 'capistrano-bundler'
+#rvm
+gem 'rvm1-capistrano3', require: false
 
 
 group :development,:test do
