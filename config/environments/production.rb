@@ -22,7 +22,7 @@ Teamroq::Application.configure do
   :address              => ENV["mailer_smtp_server"],
   :port                 => ENV["mailer_smtp_port"],
   :domain               => ENV["domain_name"],
-  :user_name            => ENV["mailer_email_address"]
+  :user_name            => ENV["mailer_email_address"],
   :password             => ENV["mailer_email_password"],
   :authentication       => "plain",
   :enable_starttls_auto => true
