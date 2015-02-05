@@ -15,7 +15,6 @@
 /public/system/document_versions
 /public/system/users
 .DS_Store
-Gemfile.lock
 /config/initializers/bullet.rb
 capybar*.html
 
