@@ -1,0 +1,5 @@
+production:
+  # use your domain/faye/faye e.g., https://teamroq.example.com/faye/faye
+  server: 
+  # Generate hex string using 'rake secret'
+  secret_token: ""
