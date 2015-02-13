@@ -31,7 +31,7 @@ gem 'identity_cache', "~> 0.2.2"
 # Redis client
 gem 'redis' , "~> 3.1.0"
 # Gamification
-gem 'gioco', "~> 1.1.1"
+gem 'gioco', "~> 1.0.1"
 
 # Database client
 gem 'pg', "~> 0.17.1"

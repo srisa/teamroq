@@ -169,7 +169,7 @@ GEM
     formatador (0.2.5)
     friendly_id (5.0.4)
       activerecord (>= 4.0.0)
-    gioco (1.1.1)
+    gioco (1.0.1)
     groupdate (2.3.0)
       activesupport (>= 3)
     guard (2.7.0)
@@ -421,7 +421,7 @@ DEPENDENCIES
   figaro (~> 1.0.0)
   foreman (~> 0.75.0)
   friendly_id (~> 5.0.4)
-  gioco (~> 1.1.1)
+  gioco (~> 1.0.1)
   groupdate (~> 2.3.0)
   guard
   guard-bundler (~> 2.0.0)
