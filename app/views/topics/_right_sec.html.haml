@@ -36,11 +36,3 @@
                           = leader[:score]
                         %span.leader-attr{:title => "Expertise in this topic"}
                           = leader[:badge]
-
-        %ul
-          - @topics.each do |t|
-            %li.small-top-margin
-              .medium.info.btn.metro.rounded
-                =link_to t[:name].upcase, tag_path(t[:name]), :class=> 'weighted'
-              %span.no-of-tags-related x 
-              = t[:tagcount]
